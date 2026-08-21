@@ -1,0 +1,2052 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TFP — TheFootballPlatform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#102018;--bg2:#0b1510;--panel:#183024;--panel2:#1d392b;--panel3:#12281d;
+ --gold:#c7a85d;--gold2:#e1cb91;--text:#e7e3d8;--muted:#8f958f;--faint:#666e68;
+ --line:rgba(199,168,93,.09);--line2:rgba(199,168,93,.19);--good:#88c28d;--danger:#d06c66;
+ --r:18px;--rl:24px;--shadow:0 14px 34px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.025);
+ --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}html,body{min-height:100%;background:var(--bg2)}
+body{font-family:var(--font);color:var(--text);-webkit-font-smoothing:antialiased;background:radial-gradient(circle at 84% -5%,rgba(199,168,93,.09),transparent 27%),radial-gradient(circle at 0 28%,rgba(68,127,88,.14),transparent 31%),linear-gradient(180deg,#102018,#0d1b14);overflow-x:hidden}
+button,input,textarea{font:inherit}.app{width:100%;min-height:100dvh;display:flex;flex-direction:column;background:transparent;position:relative;overflow:hidden}.view{display:none;flex:1;width:100%}.view.active{display:block}.app.on-formazione .topbar{display:none}
+.topbar{height:64px;display:flex;align-items:center;justify-content:space-between;padding:12px 18px;position:relative;z-index:10}.brand{display:flex;align-items:center;gap:10px;cursor:pointer}.brand .mark{width:38px;height:38px}.brand .mark img{width:38px!important;height:38px!important;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(0,0,0,.27))}.brand .name{font-size:13px;font-weight:720;letter-spacing:-.02em;color:#e6ddc9}.brand .name small{display:block;color:var(--gold);font-size:7px;text-transform:uppercase;letter-spacing:.14em;margin-top:2px;font-weight:700}.avatar,.prof-avatar{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#2d5e45,#1d3d2e);border:1px solid rgba(199,168,93,.24);color:#eadfc9;font-weight:700;box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.home-hero{max-width:880px;margin:0 auto;padding:112px 20px 0;position:relative}.net{position:absolute;inset:18px 0 auto;width:100%;height:160px;opacity:.24}.greeting{font-size:clamp(36px,6vw,58px);line-height:.95;font-weight:760;letter-spacing:-.06em;color:#efe7d8;position:relative}.greeting em{color:var(--gold);font-style:normal}
+.home-ai{width:min(calc(100% - 32px),760px);margin:24px auto 14px;padding:16px;border-radius:22px;border:1px solid var(--line2);background:radial-gradient(circle at 100% 0,rgba(199,168,93,.12),transparent 34%),linear-gradient(145deg,rgba(199,168,93,.07),transparent 46%),linear-gradient(160deg,#1b392a,#14291f);box-shadow:0 20px 46px rgba(0,0,0,.29),inset 0 1px 0 rgba(255,255,255,.04);position:relative;overflow:hidden}.home-ai:after{content:"";position:absolute;width:170px;height:170px;right:-80px;top:-105px;border-radius:50%;background:rgba(199,168,93,.12);filter:blur(36px);pointer-events:none}.home-ai-head{display:flex;align-items:center;gap:10px;position:relative;z-index:1}.ai-orb{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,#e2cd91,#b58c40);color:#172018;font-size:18px;box-shadow:0 10px 22px rgba(0,0,0,.27)}.home-ai-copy{flex:1;min-width:0}.home-ai-copy span{display:block;color:var(--gold);font-size:8px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.home-ai-copy strong{display:block;font-size:16px;letter-spacing:-.03em;margin-top:2px;color:#e9dfca}.ai-status{align-self:flex-start;color:var(--gold);font-size:7px;font-weight:800;border:1px solid rgba(199,168,93,.15);background:rgba(199,168,93,.09);padding:4px 7px;border-radius:999px}.home-ai-input{margin-top:12px;display:grid;grid-template-columns:minmax(0,1fr) 36px;gap:8px;align-items:end;padding:8px 8px 8px 13px;min-height:54px;border-radius:15px;background:rgba(7,17,12,.32);border:1px solid rgba(199,168,93,.12);box-shadow:inset 0 1px 8px rgba(0,0,0,.16);position:relative;z-index:1}.home-ai-input textarea{resize:none;border:0;outline:0;background:transparent;color:#ddd3bd;min-height:32px;max-height:90px;padding:8px 0 4px;font-size:12px;line-height:1.4}.home-ai-input textarea::placeholder{color:#85837a}.home-ai-input button,.ai-send{width:36px;height:36px;border:0;border-radius:11px;background:linear-gradient(145deg,#dfc989,#b58c40);color:#172018;font-weight:850;font-size:16px;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.24)}.home-ai-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px;position:relative;z-index:1}.home-ai-actions button{min-height:35px;border:1px solid rgba(199,168,93,.08);border-radius:11px;background:rgba(255,255,255,.025);color:var(--gold);font-size:10px;cursor:pointer}.home-ai-actions button span{color:#aea38d;font-size:8.5px;margin-left:3px}
+.quick{width:min(calc(100% - 32px),760px);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:4px 0 10px}.qcard{min-height:88px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(150deg,rgba(255,255,255,.025),transparent 48%),var(--panel);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:10px 6px;cursor:pointer;transition:.18s}.qcard:hover{transform:translateY(-2px);border-color:rgba(199,168,93,.24);background:linear-gradient(150deg,rgba(199,168,93,.05),transparent 50%),var(--panel2)}.qcard .icon{width:22px;height:22px}.qlabel{font-size:9px;color:#aaa292;text-align:center}.qcard.live{background:radial-gradient(circle at 50% -30%,rgba(199,168,93,.10),transparent 60%),var(--panel);border-color:rgba(199,168,93,.16)}.live-dot{width:6px;height:6px;border-radius:50%;background:#d2746b;display:inline-block;margin-right:4px;box-shadow:0 0 0 3px rgba(210,116,107,.10)}.score{font-size:17px;font-weight:750;color:var(--gold)}.footnote{text-align:center;color:var(--faint);font-size:9px;padding:5px 20px 18px}.footnote strong{color:var(--gold);font-weight:650}
+.leghe,.profilo{width:min(calc(100% - 32px),820px);margin:0 auto;padding:64px 0 26px}.page-title{font-size:34px;letter-spacing:-.055em;font-weight:750;color:#ede4d3;margin-bottom:26px}.section-label,.prof-section,.bench-label,.sheet-head{display:flex;align-items:center;gap:9px;margin:22px 2px 10px}.section-label h2,.prof-section h2,.bench-label h2,.sheet-head h2,.mcol-h{font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:#c7b587;font-weight:750}.section-label .rule,.prof-section .rule,.bench-label .rule,.sheet-head .rule{height:1px;background:rgba(199,168,93,.10);flex:1}.count{color:var(--gold);font-size:8px;background:rgba(199,168,93,.09);border:1px solid rgba(199,168,93,.07);border-radius:999px;padding:4px 7px}.squadre{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.squadra{min-height:94px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(150deg,rgba(255,255,255,.023),transparent 45%),var(--panel);box-shadow:var(--shadow);padding:12px;display:grid;grid-template-columns:42px 1fr auto;grid-template-rows:auto auto;column-gap:10px;align-items:center;cursor:pointer;transition:.18s}.squadra:hover{transform:translateY(-2px);border-color:rgba(199,168,93,.25);background:linear-gradient(150deg,rgba(199,168,93,.05),transparent 55%),var(--panel2)}.crest,.m-crest{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:10px;font-weight:800;color:#efe6d4;box-shadow:0 8px 18px rgba(0,0,0,.20);grid-row:1/3}.c1{background:linear-gradient(145deg,#365d48,#203e31)}.c2{background:linear-gradient(145deg,#716039,#493c24)}.c3{background:linear-gradient(145deg,#5b3b3b,#362526)}.squadra h3{font-size:12px;color:#ded3bd;align-self:end}.lega{font-size:9px;color:#85877f;align-self:start;margin-top:3px}.stats{grid-row:1/3;grid-column:3;display:flex;flex-direction:column;align-items:flex-end;gap:3px}.pos,.pts{color:var(--gold);font-weight:720}.pos{font-size:15px}.pts{font-size:10px}.squadra.nuova{grid-template-columns:auto 1fr;grid-template-rows:auto;min-height:58px;background:rgba(255,255,255,.012);box-shadow:none;border-style:dashed;color:#9b9588}.nuova .plus{color:var(--gold);font-size:20px}
+.subheader{height:62px;width:min(calc(100% - 32px),820px);margin:0 auto;display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:10px;padding-top:8px}.back-btn,.icon-btn,.g-arrow,.sheet-close{border:1px solid var(--line);background:rgba(255,255,255,.025);color:#b9ae96;border-radius:11px;cursor:pointer;box-shadow:0 7px 18px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.02)}.back-btn{width:36px;height:36px;font-size:20px}.team-name{font-size:13px;color:#dfd5c0;font-weight:680;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tool-right{display:flex;gap:7px;align-items:center}.icon-btn{width:34px;height:34px;display:grid;place-items:center}.btn-ghost,.chip{min-height:34px;border-radius:11px;border:1px solid rgba(199,168,93,.35);background:rgba(199,168,93,.035);color:var(--gold);padding:0 11px;font-size:9.5px;cursor:pointer}.btn-sm{min-height:32px;padding:0 9px}.chip{border-color:var(--line);color:#b5aa94;background:var(--panel)}
+.cal-list,.g-nav,.tfix-nav,.tfix,.stand,.mscore,.mcols{width:min(calc(100% - 32px),820px);margin-left:auto;margin-right:auto}.g-nav,.tfix-nav{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px;margin-bottom:10px}.g-label,.tfix-range{font-size:10px;color:#a29c90;min-width:110px;text-align:center}.g-arrow{width:32px;height:32px}.gcard,.tfix,.stand,.mscore,.mcol{border:1px solid var(--line);border-radius:18px;background:linear-gradient(150deg,rgba(255,255,255,.02),transparent 45%),var(--panel);box-shadow:var(--shadow);overflow:hidden}.gcard-h{display:flex;align-items:center;gap:8px;padding:13px 14px}.gcard-h h2{font-size:13px;color:#ded3bd}.gcard-h .tag{color:var(--gold);font-size:8px;text-transform:uppercase;letter-spacing:.08em;background:rgba(199,168,93,.09);padding:4px 7px;border-radius:999px}.match{display:grid;grid-template-columns:1fr 72px 1fr;align-items:center;gap:7px;padding:10px 12px;border-top:1px solid rgba(199,168,93,.055)}.match.mine,.st-row.mine{background:rgba(199,168,93,.04)}.m-team{display:flex;align-items:center;gap:7px;min-width:0}.m-team.right{flex-direction:row-reverse}.m-crest{width:28px;height:28px;border-radius:9px;font-size:8px;flex:none}.m-name{font-size:9.5px;color:#cfc6b3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.m-name.sel{color:var(--gold);font-weight:700}.m-mid{text-align:center}.m-date,.m-time{font-size:8px;color:#81857f}.m-res{font-size:10px;color:#d2c7b0;font-weight:650}.tfix{display:flex;flex-direction:column}.tfix-row{display:grid;grid-template-columns:38px 1fr auto;gap:9px;align-items:center;padding:11px 13px;border-top:1px solid rgba(199,168,93,.055)}.tfix-row:first-child{border-top:0}.tfix-g{width:30px;height:26px;border-radius:8px;display:grid;place-items:center;background:rgba(199,168,93,.09);color:var(--gold);font-size:8px;font-weight:750}.tfix-opp{font-size:10px;color:#d3c9b4}.tfix-meta{font-size:8px;color:#7e827c}.tfix-res{font-size:10px;color:#cfc4ad;font-weight:700}.tfix-res.win{color:var(--gold)}.tfix-res.up{color:#b9a77d}
+.st-row{display:grid;grid-template-columns:28px 1fr 30px 34px 54px;align-items:center;gap:6px;min-height:43px;padding:0 11px;border-top:1px solid rgba(199,168,93,.055)}.st-row.head{min-height:34px;color:#777d77;font-size:8px;border-top:0}.st-team{display:flex;align-items:center;gap:7px;min-width:0}.st-name{font-size:9.5px;color:#cec4b0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.st-row.mine .st-name,.st-fp{color:var(--gold)}.st-pos,.st-num,.st-pt,.st-fp{font-size:9px}.st-num,.st-pt{text-align:center;color:#99958a}.st-fp{text-align:right;font-weight:650}
+.mscore{padding:14px;margin-top:8px}.mlive{font-size:8px;color:#d48b7d;text-align:center}.mteams{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-top:12px}.mt{display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center}.mt b{font-size:9.5px;color:#d8cdb8}.mt small{font-size:7.5px;color:#777d77}.mpts{font-size:18px;font-weight:760;color:var(--gold);white-space:nowrap}.mcols{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}.mcol-h{padding:10px 11px;border-bottom:1px solid rgba(199,168,93,.055)}.mp{display:grid;grid-template-columns:28px 1fr 30px;gap:5px;align-items:center;padding:7px 9px;border-top:1px solid rgba(199,168,93,.045)}.mp-role{font-size:7px;color:#777d77}.mp-name{font-size:8.5px;color:#c9bfab;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mp-v{font-size:9px;color:var(--gold);font-weight:700;text-align:right}.mp-v.dim{color:#777d77}.mb-g,.mb-a{font-size:6px;border-radius:4px;padding:1px 3px;margin-left:3px}.mb-g{background:rgba(136,194,141,.14);color:var(--good)}.mb-a{background:rgba(199,168,93,.12);color:var(--gold)}.mb-y{display:inline-block;width:5px;height:7px;background:#d1b24e;border-radius:1px;margin-left:3px}
+.profilo{padding-top:28px}.prof-card{border:1px solid var(--line);border-radius:22px;background:var(--panel);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;padding:22px 18px}.prof-avatar{width:60px;height:60px;border-radius:18px;font-size:20px}.prof-name{font-size:17px;color:#ddd3bd;font-weight:720;margin-top:9px}.prof-mail{font-size:9px;color:#85877f;margin-top:3px}.prof-edit{margin-top:12px}.prof-list{border:1px solid var(--line);border-radius:18px;background:var(--panel);box-shadow:var(--shadow);overflow:hidden}.prof-row{width:100%;min-height:48px;border:0;border-top:1px solid rgba(199,168,93,.055);background:transparent;color:#c9bfaa;display:grid;grid-template-columns:20px 1fr auto;align-items:center;gap:9px;padding:0 13px;text-align:left;font-size:10px}.prof-row:first-child{border-top:0}.prof-row:hover{background:rgba(199,168,93,.03)}.prof-row .chev,.prof-row .val{color:#797c76}.prof-row.esci{grid-template-columns:1fr;color:#cc7e73}
+.pitch-tools{width:min(calc(100% - 32px),820px);margin:4px auto 10px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}.modulo-wrap{position:relative}.modulo-menu{position:absolute;top:42px;left:0;z-index:30;display:none;grid-template-columns:repeat(3,1fr);min-width:260px;padding:8px;border-radius:14px;border:1px solid var(--line2);background:#102019;box-shadow:0 20px 44px rgba(0,0,0,.36)}.modulo-menu.open{display:grid}.modulo-col{display:flex;flex-direction:column}.modulo-menu button{border:0;background:transparent;color:#cfc4ae;padding:8px;border-radius:8px;text-align:left;font-size:9px}.modulo-menu button:hover,.modulo-menu button.sel{background:rgba(199,168,93,.10);color:var(--gold)}.caret{color:#7f827c}.pitch{width:min(calc(100% - 32px),820px);min-height:470px;margin:0 auto 10px;border-radius:22px;border:1px solid var(--line);background:radial-gradient(120% 90% at 50% 0%,rgba(199,168,93,.07),transparent 55%),linear-gradient(180deg,#173a29,#10281c);box-shadow:inset 0 14px 30px rgba(255,255,255,.015),inset 0 -18px 34px rgba(0,0,0,.13),0 14px 34px rgba(0,0,0,.22);position:relative;overflow:hidden;padding:24px 12px}.pitch-lines{position:absolute;inset:0;width:100%;height:100%;opacity:.55}.pitch #pitchRows{position:relative;z-index:2;height:100%;min-height:420px;display:flex;flex-direction:column;justify-content:space-around}.pitch .row{display:flex;justify-content:space-around;gap:9px}.slot{width:76px;min-height:54px;border:1px dashed rgba(199,168,93,.35);border-radius:13px;background:rgba(255,255,255,.022);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;transition:.16s}.slot:hover{border-color:var(--gold);background:rgba(199,168,93,.06);transform:translateY(-2px)}.slot .plus{font-size:16px;color:var(--gold)}.slot .role{font-size:7.5px;color:#8c887f}.slot.filled{border-style:solid;border-color:rgba(199,168,93,.44);background:linear-gradient(145deg,rgba(199,168,93,.075),transparent),rgba(255,255,255,.023);box-shadow:0 9px 20px rgba(0,0,0,.15)}.p-name{font-size:8.5px;color:#d4c9b3;max-width:68px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.p-voto{font-size:10px;font-weight:750;color:var(--gold)}
+.ai-bar{width:min(calc(100% - 32px),820px);margin:6px auto 12px;min-height:128px;border:1px solid rgba(199,168,93,.17);border-radius:20px;padding:39px 14px 12px;background:radial-gradient(circle at 100% 0%,rgba(199,168,93,.10),transparent 34%),linear-gradient(145deg,rgba(199,168,93,.05),transparent 46%),linear-gradient(160deg,#1b392a,#14291f);box-shadow:0 18px 42px rgba(0,0,0,.27),inset 0 1px 0 rgba(255,255,255,.035);position:relative}.ai-bar:before{content:"✦  TFP Intelligence";position:absolute;top:13px;left:15px;color:var(--gold);font-size:8px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.ai-bar textarea{width:100%;resize:none;border:0;outline:0;background:transparent;color:#dcd2bd;font-size:11px;line-height:1.4}.ai-bar textarea::placeholder{color:#807e76}.ai-bar-foot{display:flex;align-items:center;justify-content:space-between;margin-top:8px}.ai-tag{display:flex;gap:5px;align-items:center;color:#9e947f;font-size:8px}
+.sheet-scrim{position:fixed;inset:0;background:rgba(3,8,5,.58);backdrop-filter:blur(4px);opacity:0;pointer-events:none;z-index:90;transition:.2s}.sheet-scrim.open{opacity:1;pointer-events:auto}.sheet{position:fixed;left:0;right:0;bottom:0;max-height:78vh;overflow:auto;z-index:100;transform:translateY(105%);transition:.28s;border-radius:26px 26px 0 0;border:1px solid rgba(199,168,93,.12);border-bottom:0;background:radial-gradient(circle at 80% 0%,rgba(199,168,93,.08),transparent 28%),linear-gradient(180deg,#193326,#102018 78%);box-shadow:0 -24px 70px rgba(0,0,0,.46);padding:9px 14px 20px}.sheet.open{transform:translateY(0)}.sheet-handle{width:34px;height:4px;border-radius:999px;background:rgba(199,168,93,.25);margin:0 auto 10px}.sheet-head{margin-top:5px}.sheet-close{width:31px;height:31px}.pick-list,.bench-list{display:flex;flex-direction:column}.pick-row{width:100%;min-height:48px;border:0;border-top:1px solid rgba(199,168,93,.055);background:transparent;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;text-align:left;padding:8px 4px;cursor:pointer}.pick-row:hover{background:rgba(199,168,93,.03)}.pick-name{font-size:10px;color:#d3c8b2}.pick-meta{font-size:8px;color:#81857f}.pick-voto{font-size:11px;color:var(--gold);font-weight:750}.pick-info{display:flex;flex-direction:column;gap:2px}.pick-row.libera{color:#c9786f;display:block;text-align:center}.tagbusy{color:#7a7d77}.bench-group-label{color:#c5b17e;font-size:8px;letter-spacing:.1em;text-transform:uppercase;margin:12px 0 7px}.bench-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.fig{position:relative;min-height:82px;border:1px solid var(--line);border-radius:14px;background:var(--panel);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;box-shadow:var(--shadow)}.fig-prio{position:absolute;top:5px;left:7px;color:var(--gold);font-size:8px;font-weight:750}.fig svg{width:24px;height:24px}.fig-name{font-size:8px;color:#ccc1ab;max-width:90%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fig-voto{color:var(--gold);font-size:10px;font-weight:750}
+@media(max-width:640px){.quick{grid-template-columns:repeat(2,1fr)}.squadre{grid-template-columns:1fr}.mcols{grid-template-columns:1fr}.mcol:nth-child(2){margin-top:0}.home-hero{padding-top:82px}.greeting{font-size:38px}.pitch{min-height:430px}.slot{width:63px;min-height:51px}.bench-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.home-hero{padding-top:128px}.home-ai{padding:18px 20px}.home-ai-input{min-height:58px}.quick{padding-top:8px}.leghe,.profilo,.cal-list,.g-nav,.tfix-nav,.tfix,.stand,.mscore,.mcols,.subheader,.pitch-tools,.pitch,.ai-bar{max-width:880px}.squadre{grid-template-columns:repeat(2,1fr)}.pitch{min-height:520px}.pitch #pitchRows{min-height:470px}.slot{width:88px;min-height:58px}}
+
+/* V11.1 — proportion pass only: preserve V11 design/functionality */
+:root{
+  --content-wide:1120px;
+  --content-main:880px;
+  --content-narrow:760px;
+}
+
+/* More balanced vertical scale */
+.topbar{min-height:62px}
+.home-hero{
+  padding-top:clamp(76px,10vh,116px);
+  padding-bottom:10px;
+}
+.greeting{
+  font-size:clamp(30px,4.2vw,42px);
+  line-height:.98;
+}
+.home-ai{
+  padding:17px 18px;
+  border-radius:21px;
+}
+.home-ai-orb{width:40px;height:40px}
+.home-ai-copy strong{font-size:clamp(15px,1.8vw,18px)}
+.home-ai-input{min-height:56px}
+.qcard{min-height:86px}
+
+/* Formation: reduce oversized pitch relative to surrounding UI */
+.pitch{
+  min-height:0!important;
+  height:auto!important;
+  aspect-ratio:1.42 / 1;
+  max-height:560px;
+}
+.slot{transform:scale(.94)}
+.fig{min-height:54px}
+
+/* Lists/cards: slightly denser, more app-like */
+.squadra{min-height:70px}
+.gcard,.tfix,.stand,.mscore,.prof-card,.prof-list{width:100%}
+.prof-card{padding:20px 18px}
+.prof-avatar{width:64px;height:64px}
+
+/* Desktop — use the screen better without making elements huge */
+@media(min-width:760px){
+  .topbar{
+    width:min(calc(100% - 56px),var(--content-wide));
+    margin-inline:auto;
+  }
+
+  .home-hero{
+    width:min(calc(100% - 56px),var(--content-main))!important;
+    padding-top:clamp(82px,11vh,122px)!important;
+  }
+
+  .home-ai{
+    width:min(calc(100% - 56px),var(--content-main))!important;
+  }
+
+  .quick{
+    width:min(calc(100% - 56px),var(--content-main))!important;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+
+  .leghe,.profilo,
+  .cal-list,.g-nav,.tfix-nav,.tfix,.stand,.mscore,.mcols{
+    width:min(calc(100% - 56px),var(--content-main))!important;
+  }
+
+  #view-formazione .subheader,
+  #view-formazione .pitch-tools,
+  #view-formazione .pitch,
+  #view-formazione .bench,
+  #view-formazione .ai-bar{
+    width:min(calc(100% - 56px),var(--content-main))!important;
+  }
+
+  #view-formazione .pitch{
+    aspect-ratio:1.55 / 1;
+    max-height:550px;
+  }
+
+  .home-ai{
+    display:grid;
+    grid-template-columns:minmax(250px,.78fr) minmax(390px,1.22fr);
+    grid-template-rows:auto auto;
+    column-gap:24px;
+    row-gap:10px;
+    align-items:center;
+  }
+  .home-ai-head{
+    grid-column:1;
+    grid-row:1 / span 2;
+  }
+  .home-ai-input{
+    grid-column:2;
+    grid-row:1;
+    margin-top:0;
+  }
+  .home-ai-actions{
+    grid-column:2;
+    grid-row:2;
+    margin-top:0;
+  }
+
+  .qcard{min-height:92px}
+}
+
+/* Large desktop: stop the interface becoming stretched */
+@media(min-width:1200px){
+  .home-hero,.home-ai,.quick,
+  .leghe,.profilo,.cal-list,.g-nav,.tfix-nav,.tfix,.stand,.mscore,.mcols,
+  #view-formazione .subheader,
+  #view-formazione .pitch-tools,
+  #view-formazione .pitch,
+  #view-formazione .bench,
+  #view-formazione .ai-bar{
+    max-width:880px!important;
+  }
+}
+
+/* Mobile: regain vertical space and thumb-friendly proportions */
+@media(max-width:759px){
+  .topbar{min-height:56px}
+  .home-hero{
+    padding-top:74px!important;
+    padding-left:16px;
+    padding-right:16px;
+  }
+  .greeting{font-size:31px}
+  .home-ai{
+    margin-top:14px;
+    padding:14px;
+    border-radius:19px;
+  }
+  .home-ai-input{min-height:50px}
+  .home-ai-actions{gap:6px}
+  .home-ai-actions button{min-height:32px}
+  .quick{gap:7px}
+  .qcard{min-height:76px}
+  .pitch{
+    aspect-ratio:1.05 / 1;
+    max-height:none;
+  }
+  .slot{transform:scale(.88)}
+  .prof-avatar{width:58px;height:58px}
+}
+
+/* Small phones */
+@media(max-width:390px){
+  .greeting{font-size:28px}
+  .home-ai-copy strong{font-size:14px}
+  .home-ai-actions button span{font-size:8px}
+  .qcard{min-height:72px}
+  .pitch{aspect-ratio:.96 / 1}
+}
+
+
+/* V11.2 — football pitch proportion correction
+   A full football pitch is visually much longer than it is wide.
+   Keep the formation functional while restoring a natural portrait field. */
+#view-formazione .pitch{
+  width:min(calc(100% - 28px), 610px)!important;
+  aspect-ratio:0.72 / 1!important;
+  height:auto!important;
+  max-height:none!important;
+  min-height:0!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  border-radius:22px;
+}
+
+/* Keep surrounding controls aligned with the narrower pitch */
+#view-formazione .pitch-tools,
+#view-formazione .bench,
+#view-formazione .ai-bar{
+  width:min(calc(100% - 28px), 760px)!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+/* Player elements no longer need the aggressive shrink used for the wide field */
+#view-formazione .slot{
+  transform:scale(.96);
+}
+
+/* Desktop: slightly wider than mobile, but still unmistakably a football pitch */
+@media(min-width:760px){
+  #view-formazione .pitch{
+    width:min(calc(100% - 56px), 620px)!important;
+    aspect-ratio:0.72 / 1!important;
+  }
+}
+
+/* Mobile: preserve useful screen width while keeping correct portrait proportions */
+@media(max-width:759px){
+  #view-formazione .pitch{
+    width:min(calc(100% - 28px), 430px)!important;
+    aspect-ratio:0.72 / 1!important;
+  }
+  #view-formazione .slot{
+    transform:scale(.92);
+  }
+}
+
+@media(max-width:390px){
+  #view-formazione .pitch{
+    width:calc(100% - 24px)!important;
+    aspect-ratio:0.70 / 1!important;
+  }
+  #view-formazione .slot{
+    transform:scale(.88);
+  }
+}
+
+
+/* V11.3 — connected player-profile architecture */
+#view-player{
+  position:fixed;
+  inset:0;
+  z-index:80;
+  background:#102018;
+  padding:0;
+  overflow:hidden;
+}
+.player-frame{
+  width:100%;
+  height:100dvh;
+  display:block;
+  border:0;
+  background:#102018;
+}
+.player-back{
+  position:fixed;
+  z-index:95;
+  top:max(14px,env(safe-area-inset-top));
+  left:max(14px,env(safe-area-inset-left));
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  border:1px solid rgba(199,168,93,.18);
+  background:rgba(12,28,20,.84);
+  backdrop-filter:blur(12px);
+  color:#d5bd83;
+  font:500 28px/1 -apple-system,BlinkMacSystemFont,"SF Pro Display","Inter",sans-serif;
+  display:grid;
+  place-items:center;
+  padding:0 0 3px;
+  box-shadow:0 10px 28px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.03);
+}
+.player-back:hover{
+  background:rgba(199,168,93,.10);
+  border-color:rgba(199,168,93,.32);
+}
+.app.on-player > .topbar,
+.app.on-player > .tabbar{
+  display:none!important;
+}
+.app.on-player{
+  overflow:hidden;
+}
+@media(min-width:760px){
+  .player-back{
+    top:20px;
+    left:20px;
+  }
+}
+
+
+/* V11.3.1 — reliable integrated player-profile view */
+#view-player.active{
+  display:block!important;
+}
+#view-player{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100dvh!important;
+  z-index:999!important;
+  padding:0!important;
+  margin:0!important;
+  overflow:hidden!important;
+  background:#102018!important;
+}
+.player-frame{
+  position:absolute;
+  inset:0;
+  width:100%!important;
+  height:100%!important;
+  border:0!important;
+  display:block!important;
+  background:#102018;
+}
+.player-back{
+  z-index:1001!important;
+}
+
+
+
+/* V11.4 — Serie A standings */
+.seriea-page{
+  width:min(calc(100% - 32px),880px);
+  margin:0 auto;
+  padding:28px 0 30px;
+}
+.seriea-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:16px;
+  margin:8px 2px 18px;
+}
+.seriea-title-wrap{min-width:0}
+.seriea-kicker{
+  color:var(--gold);
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  margin-bottom:5px;
+}
+.seriea-title{
+  font-size:34px;
+  letter-spacing:-.055em;
+  line-height:1;
+  font-weight:750;
+  color:#ede4d3;
+}
+.seriea-season{
+  flex:none;
+  color:#a79d89;
+  font-size:9px;
+  border:1px solid rgba(199,168,93,.12);
+  background:rgba(199,168,93,.045);
+  border-radius:999px;
+  padding:6px 9px;
+}
+.seriea-note{
+  margin:0 2px 12px;
+  color:#85877f;
+  font-size:9px;
+  line-height:1.45;
+}
+.seriea-note strong{color:#b9aa8b;font-weight:650}
+.seriea-table{
+  border:1px solid var(--line);
+  border-radius:20px;
+  overflow:hidden;
+  background:linear-gradient(150deg,rgba(255,255,255,.02),transparent 45%),var(--panel);
+  box-shadow:var(--shadow);
+}
+.sa-row{
+  position:relative;
+  display:grid;
+  grid-template-columns:34px minmax(140px,1fr) repeat(7,42px) 46px;
+  align-items:center;
+  min-height:45px;
+  padding:0 12px;
+  border-top:1px solid rgba(199,168,93,.055);
+}
+.sa-row:first-child{border-top:0}
+.sa-row.head{
+  min-height:36px;
+  color:#757b75;
+  font-size:7.5px;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  background:rgba(5,14,9,.16);
+}
+.sa-row:not(.head):hover{background:rgba(199,168,93,.028)}
+.sa-pos{font-size:9px;color:#9e9b92;font-weight:650}
+.sa-team{display:flex;align-items:center;gap:9px;min-width:0}
+.sa-badge{
+  width:28px;height:28px;border-radius:8px;flex:none;
+  display:grid;place-items:center;
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(199,168,93,.08);
+  color:#c9b98e;font-size:7px;font-weight:800;letter-spacing:-.02em;
+  box-shadow:0 5px 12px rgba(0,0,0,.15);
+  overflow:hidden;padding:3px;
+}
+.sa-badge img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,.24))}
+.sa-fallback{display:none;width:100%;height:100%;place-items:center}
+.sa-name{
+  min-width:0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  color:#d3c9b5;font-size:10px;font-weight:600;
+}
+.sa-num,.sa-pts{font-size:9px;text-align:center;color:#939087}
+.sa-pts{color:var(--gold);font-weight:750;font-size:10px}
+.sa-row.zone-ucl:before,.sa-row.zone-uel:before,.sa-row.zone-uecl:before,.sa-row.zone-rel:before{
+  content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:0 2px 2px 0;
+}
+.sa-row.zone-ucl:before{background:#6f91bd}
+.sa-row.zone-uel:before{background:#c7a85d}
+.sa-row.zone-uecl:before{background:#72a37c}
+.sa-row.zone-rel:before{background:#b86661}
+.seriea-legend{
+  display:flex;flex-wrap:wrap;gap:10px 15px;
+  margin:11px 3px 0;color:#777d77;font-size:8px;
+}
+.seriea-legend span{display:flex;align-items:center;gap:5px}
+.seriea-legend i{width:7px;height:7px;border-radius:2px;display:block}
+.seriea-legend .ucl{background:#6f91bd}.seriea-legend .uel{background:#c7a85d}.seriea-legend .uecl{background:#72a37c}.seriea-legend .rel{background:#b86661}
+@media(max-width:759px){
+  .seriea-page{padding-top:18px}
+  .seriea-head{align-items:center}
+  .seriea-title{font-size:29px}
+  .seriea-table{overflow-x:auto;scrollbar-width:none}
+  .seriea-table::-webkit-scrollbar{display:none}
+  .sa-row{min-width:680px;grid-template-columns:32px minmax(150px,1fr) repeat(7,40px) 44px;padding:0 10px}
+  .seriea-note{max-width:560px}
+}
+
+
+/* V8 — Ultima partita. Additive only: V7 layout/components preserved. */
+.last-match-meta{font-size:7.5px;color:#7e827c;letter-spacing:.02em;text-align:center;line-height:1.15}
+#lastMatchCard .score{font-size:15px}
+.lastmatch-page{width:min(calc(100% - 32px),880px);margin:0 auto;padding:12px 0 30px}
+.lastmatch-scorecard{border:1px solid var(--line);border-radius:20px;background:radial-gradient(circle at 50% -30%,rgba(199,168,93,.08),transparent 55%),linear-gradient(150deg,rgba(255,255,255,.02),transparent 45%),var(--panel);box-shadow:var(--shadow);padding:16px 14px 14px}
+.lm-kicker{color:var(--gold);font-size:8px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;text-align:center}
+.lm-meta{color:#7e827c;font-size:8px;text-align:center;margin-top:4px}
+.lm-teams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin-top:15px}
+.lm-team{min-width:0;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center}
+.lm-team .sa-badge{width:40px;height:40px;border-radius:11px}
+.lm-team b{max-width:100%;font-size:10px;color:#d8cdb8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lm-team small{font-size:7.5px;color:#777d77}
+.lm-score{font-size:27px;line-height:1;color:var(--gold);font-weight:760;letter-spacing:-.045em;white-space:nowrap}
+.lm-ft{font-size:7px;color:#777d77;text-align:center;margin-top:4px}
+.lm-goals{margin-top:14px;padding-top:12px;border-top:1px solid rgba(199,168,93,.07);display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lm-goals div{font-size:8.5px;color:#918c81;line-height:1.55}
+.lm-goals strong{color:#cfc4ad;font-weight:650}
+.lm-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.lm-stat{border:1px solid var(--line);border-radius:16px;background:linear-gradient(150deg,rgba(255,255,255,.018),transparent 45%),var(--panel);box-shadow:var(--shadow);padding:12px 11px}
+.lm-stat-title{color:#85877f;font-size:7.5px;text-transform:uppercase;letter-spacing:.08em;text-align:center}
+.lm-stat-values{display:grid;grid-template-columns:36px 1fr 36px;align-items:center;gap:7px;margin-top:9px}
+.lm-stat-values b{font-size:10px;text-align:center;color:#cfc4ad}
+.lm-stat-values b:last-child{color:var(--gold)}
+.lm-bar{height:5px;border-radius:999px;overflow:hidden;background:#0f1f17;display:flex}
+.lm-bar span:first-child{background:#42614f}
+.lm-bar span:last-child{background:var(--gold)}
+.lm-intel{width:100%;margin-top:0}
+.lm-intel-copy{color:#a9a08f;font-size:9.5px;line-height:1.55;margin:2px 1px 10px}
+.lm-intel-copy strong{color:#d8cdb8;font-weight:650}
+.lm-insights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.lm-insight{border:1px solid rgba(199,168,93,.07);border-radius:12px;background:rgba(255,255,255,.02);padding:9px}
+.lm-insight span{display:block;font-size:6.8px;color:#777d77;text-transform:uppercase;letter-spacing:.07em}
+.lm-insight b{display:block;margin-top:3px;font-size:8.5px;color:#cfc4ad}
+.lm-source{color:#666e68;font-size:7.5px;line-height:1.45;margin-top:9px}
+@media(max-width:759px){.lastmatch-page{padding-top:8px}.lm-stats{grid-template-columns:1fr 1fr}.lm-insights{grid-template-columns:1fr}.lm-score{font-size:24px}}
+@media(max-width:390px){.lm-stats{grid-template-columns:1fr}}
+
+
+/* V9 — NEWS ONLY. No existing component overridden. */
+.news-page{width:min(calc(100% - 32px),880px);margin:0 auto;padding:18px 0 34px}
+.news-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin:4px 2px 16px}
+.news-kicker{color:var(--gold);font-size:8px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;margin-bottom:5px}
+.news-title{font-size:34px;letter-spacing:-.055em;line-height:1;font-weight:750;color:#ede4d3}
+.news-refresh{color:#777d77;font-size:8px;text-align:right;line-height:1.4}
+.news-tabs{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin-bottom:12px}
+.news-tabs::-webkit-scrollbar{display:none}
+.news-tab{flex:none;border:1px solid var(--line);background:rgba(255,255,255,.02);color:#9a9589;border-radius:999px;padding:7px 10px;font-size:8px;cursor:pointer}
+.news-tab.active{background:rgba(199,168,93,.10);border-color:rgba(199,168,93,.18);color:var(--gold)}
+.news-lead{border:1px solid var(--line2);border-radius:20px;overflow:hidden;background:radial-gradient(circle at 85% -15%,rgba(199,168,93,.11),transparent 32%),linear-gradient(150deg,rgba(255,255,255,.025),transparent 46%),var(--panel);box-shadow:var(--shadow);display:grid;grid-template-columns:minmax(0,1.4fr) minmax(220px,.6fr)}
+.news-lead-main{padding:18px}
+.news-labels{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.news-label{font-size:7px;letter-spacing:.07em;text-transform:uppercase;border:1px solid rgba(199,168,93,.12);border-radius:999px;padding:5px 7px;color:#9c9587;background:rgba(255,255,255,.02)}
+.news-label.primary{color:var(--gold);background:rgba(199,168,93,.07);border-color:rgba(199,168,93,.18)}
+.news-lead h2{font-size:23px;line-height:1.08;letter-spacing:-.035em;color:#e9dfcb;font-weight:730;max-width:620px}
+.news-lead p{font-size:10px;line-height:1.58;color:#958f82;margin-top:9px;max-width:620px}
+.news-source{display:flex;align-items:center;gap:7px;margin-top:13px;color:#777d77;font-size:8px}
+.news-source-icon{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;border:1px solid rgba(199,168,93,.10);background:rgba(255,255,255,.02);color:var(--gold);font-weight:750}
+.news-lead-side{border-left:1px solid rgba(199,168,93,.07);padding:16px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;background:rgba(5,14,9,.10)}
+.news-side-title{font-size:7px;color:#777d77;text-transform:uppercase;letter-spacing:.08em}
+.news-side-value{font-size:12px;color:#d3c8b2;font-weight:680;margin-top:4px}
+.news-confidence{height:5px;border-radius:999px;background:#0e1e16;overflow:hidden;margin-top:8px}
+.news-confidence span{display:block;width:82%;height:100%;background:var(--gold)}
+.news-side-copy{font-size:8.5px;line-height:1.5;color:#858077}
+.news-section{display:flex;align-items:center;gap:9px;margin:20px 2px 9px}
+.news-section h2{font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:#c7b587;font-weight:750}
+.news-section .rule{height:1px;background:rgba(199,168,93,.10);flex:1}
+.news-list{display:grid;gap:8px}
+.news-card{border:1px solid var(--line);border-radius:16px;background:linear-gradient(150deg,rgba(255,255,255,.02),transparent 45%),var(--panel);box-shadow:var(--shadow);padding:12px;display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:10px;align-items:center}
+.news-thumb{width:58px;height:58px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#294a38,#183025);border:1px solid rgba(199,168,93,.07);color:var(--gold);font-size:11px;font-weight:750}
+.news-card-top{display:flex;gap:6px;align-items:center;margin-bottom:4px}
+.news-card h3{font-size:10.5px;line-height:1.35;color:#d6ccb8;font-weight:650}
+.news-card p{font-size:8.5px;line-height:1.45;color:#858077;margin-top:4px}
+.news-status{font-size:7px;border-radius:999px;padding:5px 7px;border:1px solid rgba(199,168,93,.10);color:#9b9588;white-space:nowrap}
+.news-status.ok{color:#9fc4a2;border-color:rgba(136,194,141,.16);background:rgba(136,194,141,.04)}
+.news-intel{margin-top:0!important;width:100%!important}
+.news-intel p{font-size:9.5px;line-height:1.58;color:#a69d8c;margin-bottom:10px}
+.news-intel strong{color:#d6ccb8}
+.news-note{font-size:7.5px;line-height:1.5;color:#666e68;margin:9px 2px 0}
+@media(max-width:759px){
+  .news-page{padding-top:10px}
+  .news-head{align-items:center}
+  .news-title{font-size:29px}
+  .news-lead{grid-template-columns:1fr}
+  .news-lead-side{border-left:0;border-top:1px solid rgba(199,168,93,.07)}
+  .news-card{grid-template-columns:50px minmax(0,1fr)}
+  .news-thumb{width:50px;height:50px}
+  .news-status{grid-column:2;justify-self:start}
+}
+
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="brand" id="homeLogo" role="button" tabindex="0" aria-label="Home">
+      <div class="mark">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAflBMVEXCnlisjlBzbRa8mVXFoVp5d3aueTyfb07/f3/ZsWP9/Xk8IA7Fnlq7uj3/////AABvHxj/fwC/nFcAfwAA/wD/vz///6oAAADJpFzUrWHKpFy3llTIo1v//wCqqVX/qlUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAedajUAAAAIHRSTlNjFgRWkQIGCwL9AgQkBAEBBAKJAgEEAwD8/s8vsAEDA7SK1TsAAAdcSURBVHjatVrZtqMqEAVUcIpJj8ik//+XtwpREafcXonrPHROx9pU1a6RQ+SXH5J8Zly0rv13ee4GgFFWdJL9OwBjnJ4CtPQTNhGUiWOAB+UfsjulxQEAKz7n2YLSHQD7KHcYP2PRt2j6+oJo9m0NJs54ACq+AeCaGWAcvqMCYwGAv6mAKwb+ePChZM/3XmgmgOGNAH7Wjzr+3PHBvaFC4wHYbQgMo2caNRnBxxjvvvressUEcGMYlC5IZnXf96pSSvW9tjlBvfmNGi8EKK4BQHxBct17wcuDnywB342XEK8GAF5XAAMeHqT3B49SGtUYr91MJC3PXTvKhmgv/RACfpvT21RxzjngzSQezmpT2drrpaqetM//UzI31he5FwLW5iRRQWlOcvS2tRl/lIU7B6DFmXyjKy/eQDJJzd9r+K2IItTx4QSAFyfyM398FD+ORq8kAuE5MVN5NFNoGEMD4942EcrHByMdT9AQ20/u6PMMeWcI8ZEx8xciA+K2fBdglGh0pVtZDnM3Ymxf9Z6ZPASGSqxGPK/fAeAy8/KNfCwR0eGpM3wl9+IOOIsvjO8ADNJ4oggZ9xklvtsuYVdhyojjA5XqWynuATpPGqXpRmHMSSafzq68o1vOWrtCZP6DSfxAjuL3l1W7r4J4mvchqjUxc4IhVs0WEkCMyjYpQLM3kI8qE6fZYREPUZ17jo4jRFcJ0khwiLIMQyfbOnqvQem8A4jJqHwuOelFJvFTDpW8jJxvQh5RIMwoewdQy1npNthoWHOS9SW2SCgndXAD/SNJz65NNIQI80EmJuvzYB0kejc+d6V6TiRVLkcGsVNcAZSLAirDKIBuvp2O35OXrNtyl9ZK2S5UNZ2EWLkCqH0IzOd5ePNMHzHzt07ug7WcvwGHyKXMrgEGmav121DtqV2swzmykqbB+vBhH4KNS0qvfPBb8ig0BegzmScXkPM8GqaDstgC5NWiQpaanOyS6HKayoqQsjGnjkUps6l8km1iHlelUetRXmkgFhf7VJFN/zBycKszfI0Y4rnPrhlJM3kJIMVyFjvLtxyoDvXNRiUni1M/01FONUm22wL8WDiEqTRTgRg1cDPbNBYqf822cOuhFm6fAnAZivtiHzB4DeZ55UkBqJbUnwBYWV8APBZ/meDtDEBd4FJSXrJFbRJ3G+LKB93sryzYChVmkhz2XcBd56ZIy6Jf0+20nzrZH7UioU/JJMXYs9VhX7dk9L8RuQGAnQI8pfAttB0EAkH6pVGDsdPALu3WGMWa2WSKLYALB6f++8AfvvdiBEDWkj2uWl4VnAkAXpx6iqZ2SYJNLfRjebMWkEXsT4Vv3wAA0WY9yriJ2SmgY28WkmpNSYWBcA2gQLA/8HoStqbwEwt5BGOQ5Oq6JnMs2lm/OmDL3jMLhebPoeuSviWtyVpzqrFHE/VqgL+SqAMLdcnE98eH6Y6m25YLqnpoWuqjFLVJOrvxutDqINC2T0apnorZduLd5wqTjqdPLFag2F3r6BWgrthW6nw34fxyu36n9RwcLwFq9ECVKjDsbJRwaEnFB+n6qGQmChzZKOGQZzNyLf09OWjrdjl9HkjiIZO5nXyMT/269EHIFVrsh0Zq4KGG+h+cydzRGaqDoi8PKlr2/P8rpI5rtS/JCUDoQEKHzMu4DS3iZ9NAumHssOlH3YvumqaF3pK8e5SXc/yzGMeopwVu1VcAbB64QYWCVMTPq7KjZ2P8OEmjJIfZA+mn6fNyyiyR7irXns4WpzxLDL/atAvjJ9qqN1gDQYHxEuAxhQrB4kTDyIEg1HWHsyIuqVTlv4cvQa9T/r4D8Pl2G1Sq2sdFGOWilvEk/6UAaMh2nzvbPYKri/gcys8TQr4DADMkqZL+Yb+EGNLYhvAsulsA4jV4NEkFS+sgOMDRff4u77YtwlfLFgKaJm7QrE4VyKv0DOPtxmvqKuC0yFd19fo0TG/T9+ONlRqUzGlIGaB4bBA0de6iAu0nm2OAGr3sM/EQhtfohPXhLDr/73C6sxNxbemwsPh4HNOePa7BJdPVtpMfz5eCbZ2MyUrzkqEOLDYDocMC8GSc6GgWaS+2s0TuNwkQMfgGLlL6ahnYfHZ7wBOELS03jLjj1d5UDAcIDa48gJrzisgvGou1ukH+nAl8tKhb66CDEYDt9mm20mTeQpmw08Ill85/5vCj51U5bq+ZrN3VRRHZXx8MuDrTlmQCixXYws47QBWeZX+Ku6Or4lpS9MHuigtTCmuzzKeussOKYrfrfTUt7Zqb3Tt2e8drzTJ+r0Sa0Sy3K3FsPi3txvt7FgBwPw5vR4aVlo77NNnQqXcJt2JvXF69piuWd2553cCjXNltPt1eNbJ37+kc9CvQs7g3b7n4IwCUn7pHTq+u6yWS2TfkD+2aKljzrZvGmaafV2EUz+9e97Ztkk1fH72zLpa/ECBxUHyOP2uCi03UfIauTxGvTmMA137gLysYSBlOK1rBXy/x74xiL8r4w93MyeKfndEUnN798cznn/8AG0QQ2HSJsKcAAAAASUVORK5CYII=" width="34" height="34" alt="" style="display:block">
+      </div>
+      <div class="name">TheFootballPlatform<small>Football intelligence</small></div>
+    </div>
+    <div class="avatar">L</div>
+  </header>
+
+  <!-- HOME -->
+  <main class="view active" id="view-home">
+    <div class="home-hero">
+      <svg class="net" viewBox="0 0 480 160" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="40" y1="120" x2="120" y2="60" stroke="#C9A45C" stroke-width="1" opacity=".14"/>
+        <line x1="120" y1="60" x2="200" y2="100" stroke="#C9A45C" stroke-width="1" opacity=".1"/>
+        <line x1="360" y1="40" x2="430" y2="90" stroke="#C9A45C" stroke-width="1" opacity=".12"/>
+        <line x1="300" y1="130" x2="360" y2="40" stroke="#C9A45C" stroke-width="1" opacity=".07"/>
+        <circle cx="40" cy="120" r="3" fill="#C9A45C" opacity=".6"/>
+        <circle cx="120" cy="60" r="2.4" fill="#C9A45C" opacity=".5"/>
+        <circle cx="200" cy="100" r="2" fill="#C9A45C" opacity=".35"/>
+        <circle cx="360" cy="40" r="3" fill="#C9A45C" opacity=".55"/>
+        <circle cx="430" cy="90" r="2.2" fill="#C9A45C" opacity=".45"/>
+        <circle cx="300" cy="130" r="1.8" fill="#C9A45C" opacity=".3"/>
+      </svg>
+      <h1 class="greeting">Ciao, <em>Luca</em></h1>
+    </div>
+
+    <section class="home-ai" id="homeAI">
+  <div class="home-ai-head">
+    <div class="ai-orb">✦</div>
+    <div class="home-ai-copy"><span>TFP Intelligence</span><strong>Cosa vuoi sapere?</strong></div>
+    <span class="ai-status">AI</span>
+  </div>
+  <div class="home-ai-input">
+    <textarea id="homeAIText" rows="1" placeholder="Chiedi di giocatori, scouting, mercato o formazione…"></textarea>
+    <button id="homeAISend" type="button" aria-label="Invia">↑</button>
+  </div>
+  <div class="home-ai-actions">
+    <button type="button" data-ai-prompt="Confronta due giocatori">⇄ <span>Confronta</span></button>
+    <button type="button" data-ai-prompt="Valuta un giocatore o un trasferimento">€ <span>Valuta</span></button>
+    <button type="button" data-ai-prompt="Trova giocatori simili">◎ <span>Trova profili</span></button>
+  </div>
+</section>
+
+    <div class="quick">
+      <div class="qcard" id="fantaCard" role="button" tabindex="0">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7l7-4z" stroke="#F1F4F0" stroke-width="1.8"/>
+          <circle cx="12" cy="11" r="2.6" fill="#C9A45C"/>
+        </svg>
+        <span class="qlabel">Il mio Fanta</span>
+      </div>
+      <div class="qcard live" id="lastMatchCard" role="button" tabindex="0" aria-label="Ultima partita Chelsea Milan 3 a 0">
+        <span class="qlabel">Ultima partita</span>
+        <span class="score">CHE 3 – 0 MIL</span>
+        <span class="last-match-meta">8 AGO · Amichevole</span>
+      </div>
+      <div class="qcard" id="newsCard" role="button" tabindex="0">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="4" y="5" width="16" height="14" rx="2" stroke="#F1F4F0" stroke-width="1.8"/>
+          <path d="M7.5 9.5h9M7.5 13h9M7.5 16h5" stroke="#C9A45C" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <span class="qlabel">News</span>
+      </div>
+      <div class="qcard" id="serieACard" role="button" tabindex="0">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 19V10M12 19V5M19 19v-6" stroke="#F1F4F0" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="12" cy="5" r="1.6" fill="#C9A45C"/>
+        </svg>
+        <span class="qlabel">Serie A</span>
+      </div>
+    </div>
+
+    <p class="footnote">Il voto è <strong>calcolato</strong>, non deciso.</p>
+  </main>
+
+  <!-- LEGHE -->
+  <main class="view" id="view-leghe">
+    <div class="leghe">
+      <h1 class="page-title">Le mie leghe</h1>
+
+      <div class="section-label">
+        <h2>Private</h2>
+        <span class="count">3 squadre</span>
+        <span class="rule"></span>
+      </div>
+      <div class="squadre">
+        <div class="squadra" role="button" tabindex="0">
+          <div class="crest c1">AC</div>
+          <h3>AC Sbronzi</h3>
+          <div class="lega">Lega degli amici</div>
+          <div class="stats"><span class="pos">2ª</span><span class="pts">1.842</span></div>
+        </div>
+        <div class="squadra" role="button" tabindex="0">
+          <div class="crest c2">RK</div>
+          <h3>Real Kraków</h3>
+          <div class="lega">Lega ufficio</div>
+          <div class="stats"><span class="pos">1ª</span><span class="pts">1.907</span></div>
+        </div>
+        <div class="squadra" role="button" tabindex="0">
+          <div class="crest c3">DP</div>
+          <h3>Deportivo Pentagono</h3>
+          <div class="lega">Lega famiglia</div>
+          <div class="stats"><span class="pos">5ª</span><span class="pts">1.688</span></div>
+        </div>
+      </div>
+
+      <div class="section-label">
+        <h2>Pubbliche</h2>
+        <span class="count">2 squadre</span>
+        <span class="rule"></span>
+      </div>
+      <div class="squadre">
+        <div class="squadra" role="button" tabindex="0">
+          <div class="crest c2">TP</div>
+          <h3>TFP All Stars</h3>
+          <div class="lega">Lega Italia · 10.482 iscritti</div>
+          <div class="stats"><span class="pos">312ª</span><span class="pts">1.771</span></div>
+        </div>
+        <div class="squadra" role="button" tabindex="0">
+          <div class="crest c1">PZ</div>
+          <h3>Percentile FC</h3>
+          <div class="lega">Lega Statistici · 2.130 iscritti</div>
+          <div class="stats"><span class="pos">44ª</span><span class="pts">1.895</span></div>
+        </div>
+        <div class="squadra nuova" role="button" tabindex="0">
+          <span class="plus">+</span>
+          Unisciti a una lega
+        </div>
+      </div>
+    </div>
+    <p class="footnote">Il voto è <strong>calcolato</strong>, non deciso.</p>
+  </main>
+
+  <!-- CALENDARIO: scelta squadra -->
+  <main class="view" id="view-calendario">
+    <div class="leghe">
+      <h1 class="page-title">Calendario</h1>
+
+      <div class="section-label">
+        <h2>Private</h2>
+        <span class="rule"></span>
+      </div>
+      <div class="squadre">
+        <div class="squadra cal-team" role="button" tabindex="0">
+          <div class="crest c1">AC</div>
+          <h3>AC Sbronzi</h3>
+          <div class="lega">Lega degli amici</div>
+        </div>
+        <div class="squadra cal-team" role="button" tabindex="0">
+          <div class="crest c2">RK</div>
+          <h3>Real Kraków</h3>
+          <div class="lega">Lega ufficio</div>
+        </div>
+        <div class="squadra cal-team" role="button" tabindex="0">
+          <div class="crest c3">DP</div>
+          <h3>Deportivo Pentagono</h3>
+          <div class="lega">Lega famiglia</div>
+        </div>
+      </div>
+
+      <div class="section-label">
+        <h2>Pubbliche</h2>
+        <span class="rule"></span>
+      </div>
+      <div class="squadre">
+        <div class="squadra cal-team" role="button" tabindex="0">
+          <div class="crest c2">TP</div>
+          <h3>TFP All Stars</h3>
+          <div class="lega">Lega Italia</div>
+        </div>
+        <div class="squadra cal-team" role="button" tabindex="0">
+          <div class="crest c1">PZ</div>
+          <h3>Percentile FC</h3>
+          <div class="lega">Lega Statistici</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- CALENDARIO: dettaglio squadra -->
+  <main class="view" id="view-calendario-squadra">
+    <div class="subheader">
+      <button class="back-btn" aria-label="Indietro">←</button>
+      <div class="team-name" id="calTeamName">AC Sbronzi</div>
+    </div>
+    <div class="g-nav">
+      <button class="g-arrow sm" id="gPrev" aria-label="Giornata precedente">‹</button>
+      <div class="g-label"><b id="gLabel">Giornata 4</b></div>
+      <button class="g-arrow sm" id="gNext" aria-label="Giornata successiva">›</button>
+    </div>
+    <div class="cal-list" id="calList"></div>
+
+    <div class="tfix-nav">
+      <button class="g-arrow sm" id="tfixPrev" aria-label="Partite precedenti">‹</button>
+      <span class="tfix-range" id="tfixRange">G1 – G4</span>
+      <button class="g-arrow sm" id="tfixNext" aria-label="Partite successive">›</button>
+    </div>
+    <div class="tfix" id="tfixList"></div>
+
+    <div class="ai-bar">
+      <textarea rows="2" placeholder="Ciao, Luca, cosa vuoi sapere in merito al calendario?" aria-label="Parla con l'assistente TFP"></textarea>
+      <div class="ai-bar-foot">
+        <span class="ai-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z" fill="#C9A45C"/>
+            <circle cx="18.5" cy="17.5" r="1.6" fill="#C9A45C" opacity=".7"/>
+            <circle cx="5.5" cy="16.5" r="1.2" fill="#C9A45C" opacity=".5"/>
+          </svg>
+          TFP AI
+        </span>
+        <button class="ai-send" aria-label="Invia">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 19V6M12 6l-6 6M12 6l6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- SERIE A -->
+  <main class="view" id="view-seriea">
+    <div class="subheader">
+      <button class="back-btn" aria-label="Indietro">←</button>
+      <div class="team-name">Serie A</div>
+    </div>
+    <section class="seriea-page">
+      <div class="seriea-head">
+        <div class="seriea-title-wrap">
+          <div class="seriea-kicker">Campionato italiano</div>
+          <h1 class="seriea-title">Serie A</h1>
+        </div>
+        <span class="seriea-season">2026/27</span>
+      </div>
+      <p class="seriea-note"><strong>Classifica attuale</strong> · stagione non ancora iniziata: tutte le squadre sono a 0 partite e 0 punti.</p>
+      <div class="seriea-table" aria-label="Classifica Serie A 2026/27">
+        <div class="sa-row head"><span>Pos</span><span>Squadra</span><span>PG</span><span>V</span><span>N</span><span>P</span><span>GF</span><span>GS</span><span>DR</span><span>Pt</span></div>
+        <div class="sa-row zone-ucl"><span class="sa-pos">1</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/489.png" alt="Logo AC Milan" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">MIL</span></span><span class="sa-name">AC Milan</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row zone-ucl"><span class="sa-pos">2</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/499.png" alt="Logo Atalanta" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">ATA</span></span><span class="sa-name">Atalanta</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row zone-ucl"><span class="sa-pos">3</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/500.png" alt="Logo Bologna" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">BOL</span></span><span class="sa-name">Bologna</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row zone-ucl"><span class="sa-pos">4</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/490.png" alt="Logo Cagliari" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">CAG</span></span><span class="sa-name">Cagliari</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row zone-uel"><span class="sa-pos">5</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/895.png" alt="Logo Como" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">COM</span></span><span class="sa-name">Como</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row zone-uel"><span class="sa-pos">6</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/502.png" alt="Logo Fiorentina" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">FIO</span></span><span class="sa-name">Fiorentina</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row zone-uecl"><span class="sa-pos">7</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/512.png" alt="Logo Frosinone" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">FRO</span></span><span class="sa-name">Frosinone</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row "><span class="sa-pos">8</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/495.png" alt="Logo Genoa" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">GEN</span></span><span class="sa-name">Genoa</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row "><span class="sa-pos">9</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/505.png" alt="Logo Inter" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">INT</span></span><span class="sa-name">Inter</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row "><span class="sa-pos">10</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/496.png" alt="Logo Juventus" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">JUV</span></span><span class="sa-name">Juventus</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row "><span class="sa-pos">11</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/487.png" alt="Logo Lazio" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">LAZ</span></span><span class="sa-name">Lazio</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row "><span class="sa-pos">12</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/867.png" alt="Logo Lecce" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">LEC</span></span><span class="sa-name">Lecce</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row "><span class="sa-pos">13</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/1579.png" alt="Logo Monza" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">MON</span></span><span class="sa-name">Monza</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row "><span class="sa-pos">14</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/492.png" alt="Logo Napoli" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">NAP</span></span><span class="sa-name">Napoli</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row "><span class="sa-pos">15</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/523.png" alt="Logo Parma" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">PAR</span></span><span class="sa-name">Parma</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row "><span class="sa-pos">16</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/497.png" alt="Logo Roma" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">ROM</span></span><span class="sa-name">Roma</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row "><span class="sa-pos">17</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/488.png" alt="Logo Sassuolo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">SAS</span></span><span class="sa-name">Sassuolo</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row zone-rel"><span class="sa-pos">18</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/503.png" alt="Logo Torino" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">TOR</span></span><span class="sa-name">Torino</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row zone-rel"><span class="sa-pos">19</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/494.png" alt="Logo Udinese" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">UDI</span></span><span class="sa-name">Udinese</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+        <div class="sa-row zone-rel"><span class="sa-pos">20</span><div class="sa-team"><span class="sa-badge"><img src="https://media.api-sports.io/football/teams/517.png" alt="Logo Venezia" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">VEN</span></span><span class="sa-name">Venezia</span></div><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-num">0</span><span class="sa-pts">0</span></div>
+      </div>
+      <div class="seriea-legend" aria-label="Legenda qualificazioni">
+        <span><i class="ucl"></i>Champions League</span>
+        <span><i class="uel"></i>Europa League</span>
+        <span><i class="uecl"></i>Conference League</span>
+        <span><i class="rel"></i>Retrocessione</span>
+      </div>
+
+      <div class="ai-bar" style="width:100%;margin-top:14px;">
+        <textarea rows="2" placeholder="Ciao, Luca, cosa vuoi sapere sulla Serie A?" aria-label="Parla con TFP Intelligence della Serie A"></textarea>
+        <div class="ai-bar-foot">
+          <span class="ai-tag">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z" fill="#C9A45C"/>
+              <circle cx="18.5" cy="17.5" r="1.6" fill="#C9A45C" opacity=".7"/>
+              <circle cx="5.5" cy="16.5" r="1.2" fill="#C9A45C" opacity=".5"/>
+            </svg>
+            TFP Intelligence
+          </span>
+          <button class="ai-send" aria-label="Invia">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 19V6M12 6l-6 6M12 6l6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+  <!-- ULTIMA PARTITA — V8 -->
+  <main class="view" id="view-ultima-partita">
+    <div class="subheader">
+      <button class="back-btn" aria-label="Indietro">←</button>
+      <div class="team-name">Ultima partita · AC Milan</div>
+    </div>
+    <section class="lastmatch-page">
+      <div class="lastmatch-scorecard">
+        <div class="lm-kicker">Pre-Season Tour 2026 · Amichevole</div>
+        <div class="lm-meta">8 agosto 2026 · Gelora Bung Karno Stadium · Jakarta</div>
+        <div class="lm-teams">
+          <div class="lm-team">
+            <span class="sa-badge"><img src="https://media.api-sports.io/football/teams/49.png" alt="Logo Chelsea" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">CHE</span></span>
+            <b>Chelsea</b><small>Inghilterra</small>
+          </div>
+          <div><div class="lm-score">3 – 0</div><div class="lm-ft">FINALE</div></div>
+          <div class="lm-team">
+            <span class="sa-badge"><img src="https://media.api-sports.io/football/teams/489.png" alt="Logo AC Milan" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="sa-fallback">MIL</span></span>
+            <b>AC Milan</b><small>Italia</small>
+          </div>
+        </div>
+        <div class="lm-goals">
+          <div><strong>Chelsea</strong><br>João Pedro ×2<br>Moisés Caicedo</div>
+          <div style="text-align:right"><strong>AC Milan</strong><br>Nessun gol</div>
+        </div>
+      </div>
+
+      <div class="section-label"><h2>Statistiche partita</h2><span class="rule"></span></div>
+      <div class="lm-stats">
+        <div class="lm-stat"><div class="lm-stat-title">Possesso</div><div class="lm-stat-values"><b>50%</b><div class="lm-bar"><span style="width:50%"></span><span style="width:50%"></span></div><b>50%</b></div></div>
+        <div class="lm-stat"><div class="lm-stat-title">Tiri in porta</div><div class="lm-stat-values"><b>8</b><div class="lm-bar"><span style="width:100%"></span><span style="width:0%"></span></div><b>0</b></div></div>
+        <div class="lm-stat"><div class="lm-stat-title">Corner</div><div class="lm-stat-values"><b>7</b><div class="lm-bar"><span style="width:78%"></span><span style="width:22%"></span></div><b>2</b></div></div>
+        <div class="lm-stat"><div class="lm-stat-title">Passaggi riusciti</div><div class="lm-stat-values"><b>434</b><div class="lm-bar"><span style="width:50%"></span><span style="width:50%"></span></div><b>434</b></div></div>
+        <div class="lm-stat"><div class="lm-stat-title">Precisione passaggi</div><div class="lm-stat-values"><b>90%</b><div class="lm-bar"><span style="width:51%"></span><span style="width:49%"></span></div><b>87%</b></div></div>
+        <div class="lm-stat"><div class="lm-stat-title">Falli</div><div class="lm-stat-values"><b>11</b><div class="lm-bar"><span style="width:39%"></span><span style="width:61%"></span></div><b>17</b></div></div>
+      </div>
+
+      <div class="section-label"><h2>TFP Intelligence</h2><span class="rule"></span></div>
+      <div class="ai-bar lm-intel">
+        <p class="lm-intel-copy">Il <strong>3–0</strong> nasce soprattutto dalla differenza nella qualità delle occasioni. Il Milan ha chiuso con lo stesso possesso del Chelsea, ma senza registrare <strong>un tiro in porta</strong>. Il dato suggerisce un possesso poco incisivo e una difficoltà nel trasformare la costruzione in occasioni pulite.</p>
+        <div class="lm-insights">
+          <div class="lm-insight"><span>Dato chiave</span><b>0 tiri in porta</b></div>
+          <div class="lm-insight"><span>Controllo</span><b>Possesso 50–50</b></div>
+          <div class="lm-insight"><span>Area critica</span><b>Produzione offensiva</b></div>
+        </div>
+        <div class="lm-source">Dati partita: AC Milan match report ed ESPN. TFP Intelligence è una lettura analitica dei dati disponibili.</div>
+      </div>
+    </section>
+  </main>
+
+
+  <!-- NEWS — V9 -->
+  <main class="view" id="view-news">
+    <div class="subheader">
+      <button class="back-btn" aria-label="Indietro">←</button>
+      <div class="team-name">News · AC Milan</div>
+    </div>
+
+    <section class="news-page">
+      <div class="news-head">
+        <div>
+          <div class="news-kicker">TFP Newsroom</div>
+          <h1 class="news-title">News</h1>
+        </div>
+        <div class="news-refresh">Feed dimostrativo<br>pronto per JSON</div>
+      </div>
+
+      <div class="news-tabs" aria-label="Filtri news">
+        <button class="news-tab active" type="button">Tutte</button>
+        <button class="news-tab" type="button">Milan</button>
+        <button class="news-tab" type="button">Mercato</button>
+        <button class="news-tab" type="button">Squadra</button>
+        <button class="news-tab" type="button">Serie A</button>
+      </div>
+
+      <article class="news-lead">
+        <div class="news-lead-main">
+          <div class="news-labels">
+            <span class="news-label primary">In evidenza</span>
+            <span class="news-label">Mercato</span>
+            <span class="news-label">Aggiornamento</span>
+          </div>
+          <h2>Il mercato entra nella fase decisiva: TFP raccoglie e ordina gli ultimi segnali</h2>
+          <p>La notizia principale aggrega gli aggiornamenti provenienti dalle fonti monitorate, riduce i duplicati e separa le conferme dalle indiscrezioni.</p>
+          <div class="news-source"><span class="news-source-icon">X</span><span>Fonti multiple · 12 min fa · 3 aggiornamenti</span></div>
+        </div>
+        <div class="news-lead-side">
+          <div>
+            <div class="news-side-title">Affidabilità TFP</div>
+            <div class="news-side-value">Alta · 82%</div>
+            <div class="news-confidence"><span></span></div>
+          </div>
+          <div>
+            <div class="news-side-title">Stato</div>
+            <div class="news-side-value">In evoluzione</div>
+          </div>
+          <div class="news-side-copy">La stessa notizia può essere aggiornata nel tempo quando arrivano nuovi riscontri, senza generare duplicati nel feed.</div>
+        </div>
+      </article>
+
+      <div class="news-section"><h2>Ultimi aggiornamenti</h2><span class="rule"></span></div>
+      <div class="news-list">
+        <article class="news-card">
+          <div class="news-thumb">X</div>
+          <div>
+            <div class="news-card-top"><span class="news-label">Mercato</span><span style="font-size:7px;color:#777d77">18 min fa</span></div>
+            <h3>Nuovi contatti nelle ultime ore: la situazione resta aperta</h3>
+            <p>TFP sintetizza gli aggiornamenti degli account seguiti e mantiene separati i fatti confermati dalle indiscrezioni.</p>
+          </div>
+          <span class="news-status">In sviluppo</span>
+        </article>
+
+        <article class="news-card">
+          <div class="news-thumb">YT</div>
+          <div>
+            <div class="news-card-top"><span class="news-label">Analisi</span><span style="font-size:7px;color:#777d77">42 min fa</span></div>
+            <h3>Il punto della giornata: priorità tecniche e prossime mosse</h3>
+            <p>Un mini-articolo costruito a partire dai passaggi rilevanti emersi in un approfondimento video monitorato.</p>
+          </div>
+          <span class="news-status ok">Confermato</span>
+        </article>
+
+        <article class="news-card">
+          <div class="news-thumb">IG</div>
+          <div>
+            <div class="news-card-top"><span class="news-label">Squadra</span><span style="font-size:7px;color:#777d77">1 h fa</span></div>
+            <h3>Dal campo arrivano nuove indicazioni sulla preparazione</h3>
+            <p>I contenuti pubblicati sui canali seguiti vengono convertiti in aggiornamenti brevi con fonte e timestamp.</p>
+          </div>
+          <span class="news-status ok">Verificato</span>
+        </article>
+
+        <article class="news-card">
+          <div class="news-thumb">X</div>
+          <div>
+            <div class="news-card-top"><span class="news-label">Rumor</span><span style="font-size:7px;color:#777d77">2 h fa</span></div>
+            <h3>Una nuova pista compare nel radar, ma mancano riscontri indipendenti</h3>
+            <p>Il feed distingue visivamente le indiscrezioni non confermate dalle informazioni con più fonti concordanti.</p>
+          </div>
+          <span class="news-status">Da verificare</span>
+        </article>
+      </div>
+
+      <div class="news-section"><h2>TFP Intelligence</h2><span class="rule"></span></div>
+      <div class="ai-bar news-intel">
+        <p>La logica prevista per il feed è: <strong>aggregare gli aggiornamenti sulla stessa storia</strong>, mostrare chiaramente fonte e recenza e assegnare priorità alle notizie con più riscontri indipendenti.</p>
+        <div class="lm-insights">
+          <div class="lm-insight"><span>Priorità</span><b>Rilevanza</b></div>
+          <div class="lm-insight"><span>Controllo</span><b>Fonti multiple</b></div>
+          <div class="lm-insight"><span>Output</span><b>Mini-articolo</b></div>
+        </div>
+      </div>
+
+      <div class="news-note">Contenuti dimostrativi. La sezione è predisposta per essere alimentata in seguito dal JSON prodotto dal workflow di raccolta e sintesi delle fonti.</div>
+    </section>
+  </main>
+
+  <!-- PROFILO -->
+  <main class="view" id="view-profilo">
+    <div class="subheader">
+      <button class="back-btn" aria-label="Indietro">←</button>
+      <div class="team-name">Profilo</div>
+    </div>
+    <div class="profilo">
+      <div class="prof-card">
+        <div class="prof-avatar">L</div>
+        <div class="prof-name">Luca</div>
+        <div class="prof-mail">luca@thefootballplatform.it</div>
+        <button class="btn-ghost btn-sm prof-edit">Modifica profilo</button>
+      </div>
+
+      <div class="prof-section"><h2>Impostazioni</h2><span class="rule"></span></div>
+      <div class="prof-list">
+        <button class="prof-row">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 19.5c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          Dati account
+          <span class="chev">›</span>
+        </button>
+        <button class="prof-row">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M6 10a6 6 0 0112 0c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 19a2.2 2.2 0 004 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          Notifiche
+          <span class="chev">›</span>
+        </button>
+        <button class="prof-row">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M20 13.5A8 8 0 1110.5 4 6.5 6.5 0 0020 13.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          Tema
+          <span class="val">Scuro</span>
+        </button>
+        <button class="prof-row">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 12h17M12 3.5c2.5 2.4 3.8 5.3 3.8 8.5s-1.3 6.1-3.8 8.5c-2.5-2.4-3.8-5.3-3.8-8.5s1.3-6.1 3.8-8.5z" stroke="currentColor" stroke-width="1.8"/></svg>
+          Lingua
+          <span class="val">Italiano</span>
+        </button>
+      </div>
+
+      <div class="prof-section"><h2>Account</h2><span class="rule"></span></div>
+      <div class="prof-list">
+        <button class="prof-row esci">Esci</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- CLASSIFICA: scelta squadra -->
+  <main class="view" id="view-classifica">
+    <div class="leghe">
+      <h1 class="page-title">Classifica</h1>
+
+      <div class="section-label">
+        <h2>Private</h2>
+        <span class="rule"></span>
+      </div>
+      <div class="squadre">
+        <div class="squadra clas-team" role="button" tabindex="0">
+          <div class="crest c1">AC</div>
+          <h3>AC Sbronzi</h3>
+          <div class="lega">Lega degli amici</div>
+        </div>
+        <div class="squadra clas-team" role="button" tabindex="0">
+          <div class="crest c2">RK</div>
+          <h3>Real Kraków</h3>
+          <div class="lega">Lega ufficio</div>
+        </div>
+        <div class="squadra clas-team" role="button" tabindex="0">
+          <div class="crest c3">DP</div>
+          <h3>Deportivo Pentagono</h3>
+          <div class="lega">Lega famiglia</div>
+        </div>
+      </div>
+
+      <div class="section-label">
+        <h2>Pubbliche</h2>
+        <span class="rule"></span>
+      </div>
+      <div class="squadre">
+        <div class="squadra clas-team" role="button" tabindex="0">
+          <div class="crest c2">TP</div>
+          <h3>TFP All Stars</h3>
+          <div class="lega">Lega Italia</div>
+        </div>
+        <div class="squadra clas-team" role="button" tabindex="0">
+          <div class="crest c1">PZ</div>
+          <h3>Percentile FC</h3>
+          <div class="lega">Lega Statistici</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- CLASSIFICA: dettaglio lega -->
+  <main class="view" id="view-classifica-lega">
+    <div class="subheader">
+      <button class="back-btn" aria-label="Indietro">←</button>
+      <div class="team-name" id="clasTitle">Classifica</div>
+    </div>
+    <div class="stand" id="standTable"></div>
+
+    <div class="ai-bar">
+      <textarea rows="2" placeholder="Ciao, Luca, cosa vuoi sapere in merito al campionato?" aria-label="Parla con l'assistente TFP"></textarea>
+      <div class="ai-bar-foot">
+        <span class="ai-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z" fill="#C9A45C"/>
+            <circle cx="18.5" cy="17.5" r="1.6" fill="#C9A45C" opacity=".7"/>
+            <circle cx="5.5" cy="16.5" r="1.2" fill="#C9A45C" opacity=".5"/>
+          </svg>
+          TFP AI
+        </span>
+        <button class="ai-send" aria-label="Invia">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 19V6M12 6l-6 6M12 6l6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- PARTITA (solo Deportivo Pentagono) -->
+  <main class="view" id="view-partita">
+    <div class="subheader">
+      <button class="back-btn" aria-label="Indietro">←</button>
+      <div class="team-name">Giornata 3 · Lega famiglia</div>
+    </div>
+
+    <div class="mscore">
+      <div class="mlive"><span class="live-dot"></span> Live · 78'</div>
+      <div class="mteams">
+        <div class="mt"><span class="m-crest c3">DP</span><b>Deportivo Pentagono</b><small>4-4-2</small></div>
+        <div class="mpts">73,5 – 72,5</div>
+        <div class="mt"><span class="m-crest c2">ZF</span><b>FC Zio Franco</b><small>3-5-2</small></div>
+      </div>
+    </div>
+
+    <div class="mcols">
+      <div class="mcol">
+        <div class="mcol-h">Titolari</div>
+        <div class="mp left">
+          <span class="mp-role">POR</span>
+          <span class="mp-name">B. Guantone</span>
+          <span class="mp-v">6</span>
+        </div><div class="mp left">
+          <span class="mp-role">DIF</span>
+          <span class="mp-name">E. Muraglia</span>
+          <span class="mp-v">6,5</span>
+        </div><div class="mp left">
+          <span class="mp-role">DIF</span>
+          <span class="mp-name">M. Cementi</span>
+          <span class="mp-v">6</span>
+        </div><div class="mp left">
+          <span class="mp-role">DIF</span>
+          <span class="mp-name">R. Baluardo<span class="mb-y"></span></span>
+          <span class="mp-v">5,5</span>
+        </div><div class="mp left">
+          <span class="mp-role">DIF</span>
+          <span class="mp-name">L. Diagonale</span>
+          <span class="mp-v">7</span>
+        </div><div class="mp left">
+          <span class="mp-role">CEN</span>
+          <span class="mp-name">T. Regista<span class="mb-a">A</span></span>
+          <span class="mp-v">7,5</span>
+        </div><div class="mp left">
+          <span class="mp-role">CEN</span>
+          <span class="mp-name">F. Geometra</span>
+          <span class="mp-v">6,5</span>
+        </div><div class="mp left">
+          <span class="mp-role">CEN</span>
+          <span class="mp-name">E. Pendolo</span>
+          <span class="mp-v">6</span>
+        </div><div class="mp left">
+          <span class="mp-role">CEN</span>
+          <span class="mp-name">A. Tessitore</span>
+          <span class="mp-v">5,5</span>
+        </div><div class="mp left">
+          <span class="mp-role">ATT</span>
+          <span class="mp-name">R. Bomber<span class="mb-g">G</span><span class="mb-g">G</span></span>
+          <span class="mp-v">10,5</span>
+        </div><div class="mp left">
+          <span class="mp-role">ATT</span>
+          <span class="mp-name">C. Sassata</span>
+          <span class="mp-v">6,5</span>
+        </div>
+        <div class="mcol-h">Panchina</div>
+        <div class="mp bench left">
+          <span class="mp-role">POR</span>
+          <span class="mp-name">I. Farfalla</span>
+          <span class="mp-v dim">—</span>
+        </div><div class="mp bench left">
+          <span class="mp-role">DIF</span>
+          <span class="mp-name">D. Falcata</span>
+          <span class="mp-v dim">—</span>
+        </div><div class="mp bench left">
+          <span class="mp-role">DIF</span>
+          <span class="mp-name">N. Scivolata</span>
+          <span class="mp-v dim">6</span>
+        </div><div class="mp bench left">
+          <span class="mp-role">CEN</span>
+          <span class="mp-name">L. Mediana</span>
+          <span class="mp-v dim">—</span>
+        </div><div class="mp bench left">
+          <span class="mp-role">CEN</span>
+          <span class="mp-name">G. Lancio</span>
+          <span class="mp-v dim">6</span>
+        </div><div class="mp bench left">
+          <span class="mp-role">ATT</span>
+          <span class="mp-name">D. Spiovente</span>
+          <span class="mp-v dim">—</span>
+        </div><div class="mp bench left">
+          <span class="mp-role">ATT</span>
+          <span class="mp-name">N. Zampata</span>
+          <span class="mp-v dim">—</span>
+        </div>
+      </div>
+      <div class="mcol">
+        <div class="mcol-h">Titolari</div>
+        <div class="mp right">
+          <span class="mp-role">POR</span>
+          <span class="mp-name">P. Traversa</span>
+          <span class="mp-v">6,5</span>
+        </div><div class="mp right">
+          <span class="mp-role">DIF</span>
+          <span class="mp-name">G. Tenaglia</span>
+          <span class="mp-v">6</span>
+        </div><div class="mp right">
+          <span class="mp-role">DIF</span>
+          <span class="mp-name">B. Anticipo</span>
+          <span class="mp-v">6,5</span>
+        </div><div class="mp right">
+          <span class="mp-role">DIF</span>
+          <span class="mp-name">F. Ringhio<span class="mb-y"></span></span>
+          <span class="mp-v">5</span>
+        </div><div class="mp right">
+          <span class="mp-role">CEN</span>
+          <span class="mp-name">P. Fascia</span>
+          <span class="mp-v">6,5</span>
+        </div><div class="mp right">
+          <span class="mp-role">CEN</span>
+          <span class="mp-name">N. Tiqui</span>
+          <span class="mp-v">7</span>
+        </div><div class="mp right">
+          <span class="mp-role">CEN</span>
+          <span class="mp-name">C. Taca</span>
+          <span class="mp-v">6</span>
+        </div><div class="mp right">
+          <span class="mp-role">CEN</span>
+          <span class="mp-name">B. Inserimento<span class="mb-g">G</span></span>
+          <span class="mp-v">8</span>
+        </div><div class="mp right">
+          <span class="mp-role">CEN</span>
+          <span class="mp-name">D. Corsa</span>
+          <span class="mp-v">6</span>
+        </div><div class="mp right">
+          <span class="mp-role">ATT</span>
+          <span class="mp-name">M. Puntero<span class="mb-g">G</span></span>
+          <span class="mp-v">9,5</span>
+        </div><div class="mp right">
+          <span class="mp-role">ATT</span>
+          <span class="mp-name">E. Guizzo</span>
+          <span class="mp-v">5,5</span>
+        </div>
+        <div class="mcol-h">Panchina</div>
+        <div class="mp bench right">
+          <span class="mp-role">POR</span>
+          <span class="mp-name">R. Paratutto</span>
+          <span class="mp-v dim">—</span>
+        </div><div class="mp bench right">
+          <span class="mp-role">DIF</span>
+          <span class="mp-name">S. Marcatura</span>
+          <span class="mp-v dim">—</span>
+        </div><div class="mp bench right">
+          <span class="mp-role">DIF</span>
+          <span class="mp-name">T. Sovrapposta</span>
+          <span class="mp-v dim">—</span>
+        </div><div class="mp bench right">
+          <span class="mp-role">CEN</span>
+          <span class="mp-name">L. Smista</span>
+          <span class="mp-v dim">5,5</span>
+        </div><div class="mp bench right">
+          <span class="mp-role">CEN</span>
+          <span class="mp-name">P. Sgroppata</span>
+          <span class="mp-v dim">—</span>
+        </div><div class="mp bench right">
+          <span class="mp-role">ATT</span>
+          <span class="mp-name">J. Rasoterra</span>
+          <span class="mp-v dim">6,5</span>
+        </div><div class="mp bench right">
+          <span class="mp-role">ATT</span>
+          <span class="mp-name">K. Girata</span>
+          <span class="mp-v dim">—</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FORMAZIONE -->
+
+  <!-- PLAYER PROFILE -->
+  <main class="view player-profile-view" id="view-player">
+    <button class="player-back" id="playerBack" type="button" aria-label="Torna indietro">‹</button>
+    <iframe
+      id="playerFrame"
+      class="player-frame"
+      src="camarda-profile.html"
+      title="Profilo giocatore"
+      loading="eager">
+    </iframe>
+  </main>
+
+  <main class="view" id="view-formazione">
+    <div class="subheader">
+      <button class="back-btn" aria-label="Indietro">←</button>
+      <div class="team-name">AC Sbronzi</div>
+      <div class="tool-right">
+        <button class="icon-btn" id="fCalBtn" aria-label="Calendario squadra">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 9.5h16M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <button class="icon-btn" id="fClasBtn" aria-label="Classifica lega">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 19V10M12 19V5M19 19v-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+
+    <div class="pitch-tools">
+      <div class="modulo-wrap">
+        <button class="chip" id="moduloBtn" aria-haspopup="true" aria-expanded="false"><span id="moduloLabel">4-4-2</span> <span class="caret">▾</span></button>
+        <div class="modulo-menu" id="moduloMenu" role="menu"></div>
+      </div>
+      <button class="chip" id="benchBtn">Panchina <span class="caret" id="benchBtnCount">0/14</span></button>
+      <button class="btn-ghost btn-sm" id="randomBtn">Squadra casuale</button>
+      <div class="tool-right">
+        <button class="icon-btn" id="svuotaBtn" aria-label="Svuota formazione">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M5 7h14M9 7V5h6v2M8 7l1 12h6l1-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="icon-btn" aria-label="Condividi">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M21 3L10 14M21 3l-7 18-4-7-7-4 18-7z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="pitch">
+      <svg class="pitch-lines" viewBox="0 0 400 470" preserveAspectRatio="none" aria-hidden="true">
+        <rect x="10" y="10" width="380" height="450" rx="14" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="1.5"/>
+        <line x1="10" y1="235" x2="390" y2="235" stroke="rgba(255,255,255,.10)" stroke-width="1.5"/>
+        <circle cx="200" cy="235" r="46" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="1.5"/>
+        <rect x="110" y="380" width="180" height="80" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="1.5"/>
+        <rect x="110" y="10" width="180" height="80" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="1.5"/>
+      </svg>
+      <div id="pitchRows"></div>
+    </div>
+
+    <div class="ai-bar">
+      <textarea rows="2" placeholder="Ciao, Luca, cosa vuoi sapere in merito alla squadra?" aria-label="Parla con l'assistente TFP"></textarea>
+      <div class="ai-bar-foot">
+        <span class="ai-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z" fill="#C9A45C"/>
+            <circle cx="18.5" cy="17.5" r="1.6" fill="#C9A45C" opacity=".7"/>
+            <circle cx="5.5" cy="16.5" r="1.2" fill="#C9A45C" opacity=".5"/>
+          </svg>
+          TFP AI
+        </span>
+        <button class="ai-send" aria-label="Invia">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 19V6M12 6l-6 6M12 6l6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+
+  </main>
+
+  <!-- Picker giocatori -->
+  <div class="sheet-scrim" id="pickScrim"></div>
+  <div class="sheet" id="pickSheet" role="dialog" aria-label="Scegli giocatore">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <h2 id="pickTitle">Attaccanti</h2>
+      <span class="rule"></span>
+      <button class="sheet-close" id="pickClose" aria-label="Chiudi">✕</button>
+    </div>
+    <div class="pick-list" id="pickList"></div>
+  </div>
+
+  <!-- Panchina bottom sheet -->
+  <div class="sheet-scrim" id="benchScrim"></div>
+  <div class="sheet" id="benchSheet" role="dialog" aria-label="Panchina">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <h2>Panchina</h2>
+      <span class="count" id="benchCount">0/14</span>
+      <span class="rule"></span>
+      <button class="sheet-close" id="benchClose" aria-label="Chiudi">✕</button>
+    </div>
+    <div class="bench-list" id="benchRow"></div>
+  </div>
+</div>
+
+<script>
+
+  const views = {
+    home: document.getElementById('view-home'),
+    leghe: document.getElementById('view-leghe'),
+    formazione: document.getElementById('view-formazione'),
+    calendario: document.getElementById('view-calendario'),
+    profilo: document.getElementById('view-profilo'),
+    classifica: document.getElementById('view-classifica'),
+    seriea: document.getElementById('view-seriea'),
+    'ultima-partita': document.getElementById('view-ultima-partita'),
+    'classifica-lega': document.getElementById('view-classifica-lega'),
+    'calendario-squadra': document.getElementById('view-calendario-squadra'),
+    partita: document.getElementById('view-partita'),
+    player: document.getElementById('view-player')
+  };
+  const navStack = [];
+  function applyView(target){
+    document.getElementById('app').classList.toggle('on-formazione', ['formazione','calendario-squadra','profilo','classifica-lega','partita','seriea','ultima-partita'].includes(target));
+    document.getElementById('app').classList.toggle('on-player', target === 'player');
+    Object.entries(views).forEach(([k,v]) => v.classList.toggle('active', k === target));
+  }
+  function show(target){
+    const current = Object.keys(views).find(k => views[k].classList.contains('active'));
+    if(current && current !== target) navStack.push(current);
+    applyView(target);
+  }
+  function goBack(){
+    applyView(navStack.pop() || 'home');
+  }
+  document.querySelectorAll('.subheader .back-btn').forEach(b => b.addEventListener('click', goBack));
+  document.getElementById('playerBack').addEventListener('click', goBack);
+  document.getElementById('homeLogo').addEventListener('click', () => { navStack.length = 0; applyView('home'); });
+
+  // Entry points verso la formazione
+  document.getElementById('fantaCard').addEventListener('click', () => show('leghe'));
+  document.getElementById('serieACard').addEventListener('click', () => show('seriea'));
+  document.getElementById('lastMatchCard').addEventListener('click', () => show('ultima-partita'));
+  document.querySelectorAll('.squadra:not(.nuova):not(.cal-team):not(.clas-team)').forEach(card => {
+    card.addEventListener('click', () => {
+      const nome = card.querySelector('h3').textContent;
+      if(nome === 'Deportivo Pentagono'){
+        show('partita');
+        return;
+      }
+      document.querySelector('#view-formazione .team-name').textContent = nome;
+      show('formazione');
+    });
+  });
+  // Formazione: scorciatoie a calendario e classifica della squadra
+  function legaDi(team){
+    const card = [...document.querySelectorAll('#view-leghe .squadra')].find(c => c.querySelector('h3')?.textContent === team);
+    return card ? card.querySelector('.lega').textContent.split(' \u00B7 ')[0] : 'Lega';
+  }
+  document.getElementById('fCalBtn').addEventListener('click', () => {
+    const t = document.querySelector('#view-formazione .team-name').textContent;
+    calTeam = t; calIdx = 3; tfixPage = 0;
+    renderGiornata(); renderTeamMatches();
+    document.getElementById('calTeamName').textContent = 'Calendario \u00B7 ' + t;
+    show('calendario-squadra');
+  });
+  document.getElementById('fClasBtn').addEventListener('click', () => {
+    const t = document.querySelector('#view-formazione .team-name').textContent;
+    document.getElementById('clasTitle').textContent = 'Classifica \u00B7 ' + legaDi(t);
+    document.getElementById('standTable').innerHTML = buildStandings(t);
+    show('classifica-lega');
+  });
+
+  // Calendario: scelta squadra -> calendario squadra
+  document.querySelectorAll('.cal-team').forEach(card => {
+    card.addEventListener('click', () => {
+      document.getElementById('calTeamName').textContent =
+        'Calendario · ' + card.querySelector('h3').textContent;
+      show('calendario-squadra');
+    });
+  });
+
+  // Profilo: avatar in home -> profilo
+  document.querySelector('.topbar .avatar').style.cursor = 'pointer';
+  document.querySelector('.topbar .avatar').addEventListener('click', () => show('profilo'));
+
+  // ---- Classifica lega ----
+  function buildStandings(teamName){
+    // coerente con i risultati del calendario mock (3 giornate giocate)
+    const rows = [
+      {pos:1, name:teamName, g:3, pt:9, fp:'230', mine:true},
+      {pos:2, name:'Aristoteles', g:3, pt:7, fp:'218,5'},
+      {pos:3, name:'Real Bilbao', g:3, pt:6, fp:'222'},
+      {pos:4, name:'Schidionetti FC', g:3, pt:6, fp:'214,5'},
+      {pos:5, name:'Dinamo Cesenatico', g:3, pt:4, fp:'209,5'},
+      {pos:6, name:'Atletico Baggio', g:3, pt:3, fp:'223,5'},
+      {pos:7, name:'Longobarda', g:3, pt:0, fp:'201'},
+      {pos:8, name:'FC Trequarti', g:3, pt:0, fp:'196,5'}
+    ];
+    const head = '<div class="st-row head"><span>#</span><span>Squadra</span><span style="text-align:center">G</span><span style="text-align:center">Pt</span><span style="text-align:right">Fantapt</span></div>';
+    return head + rows.map((r, i) =>
+      '<div class="st-row' + (r.mine ? ' mine' : '') + '">' +
+        '<span class="st-pos"' + (r.pos === 1 ? ' style="color:var(--gold)"' : '') + '>' + r.pos + '</span>' +
+        '<span class="st-team">' + crest(r.name, r.mine ? 0 : i) + '<span class="st-name">' + r.name + '</span></span>' +
+        '<span class="st-num">' + r.g + '</span>' +
+        '<span class="st-pt">' + r.pt + '</span>' +
+        '<span class="st-fp">' + r.fp + '</span>' +
+      '</div>').join('');
+  }
+  document.querySelectorAll('.clas-team').forEach(card => {
+    card.addEventListener('click', () => {
+      document.getElementById('clasTitle').textContent =
+        'Classifica \u00B7 ' + card.querySelector('.lega').textContent;
+      document.getElementById('standTable').innerHTML =
+        buildStandings(card.querySelector('h3').textContent);
+      show('classifica-lega');
+    });
+  });
+  document.getElementById('standTable').innerHTML = buildStandings('AC Sbronzi');
+
+  // ---- Calendario squadra: una giornata alla volta ----
+  function crest(name, i){
+    const colors = ['c1','c2','c3'];
+    const ini = name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+    return `<span class="m-crest ${colors[i % 3]}">${ini}</span>`;
+  }
+  function calGiornate(teamName){
+    const T = [teamName,'Longobarda','Schidionetti FC','Real Bilbao','Aristoteles','Dinamo Cesenatico','Atletico Baggio','FC Trequarti'];
+    return { T, G: [
+      {n:1, date:'24 ago', matches:[[0,1,'78,5 – 66'],[2,3,'71 – 74'],[4,5,'69,5 – 69,5'],[6,7,'80 – 62']]},
+      {n:2, date:'31 ago', matches:[[3,0,'70 – 70,5'],[1,4,'66 – 72'],[5,6,'75,5 – 71'],[7,2,'68 – 73,5']]},
+      {n:3, date:'14 set', matches:[[0,5,'81 – 64,5'],[2,1,'70 – 69'],[4,7,'77 – 66,5'],[6,3,'72,5 – 78']]},
+      {n:4, date:'21 set', next:true, matches:[[4,0,'15:00'],[1,7,'15:00'],[3,5,'18:00'],[2,6,'20:45']]},
+      {n:5, date:'28 set', matches:[[0,2,'—'],[5,1,'—'],[7,3,'—'],[6,4,'—']]}
+    ]};
+  }
+  let calTeam = 'AC Sbronzi';
+  let calIdx = 3; // default: prossima giornata
+  let chatCompact = false;
+  function renderGiornata(){
+    const {T, G} = calGiornate(calTeam);
+    const g = G[calIdx];
+    document.getElementById('gLabel').textContent = 'Giornata ' + g.n;
+    document.getElementById('gPrev').disabled = calIdx === 0;
+    document.getElementById('gNext').disabled = calIdx === G.length - 1;
+    let shown = g.matches;
+    if(chatCompact){
+      const mia = g.matches.find(([h,a]) => h === 0 || a === 0);
+      const altra = g.matches.find(([h,a]) => h !== 0 && a !== 0);
+      shown = [mia, altra].filter(Boolean);
+    }
+    const rows = shown.map(([h,a,val]) => {
+      const mine = (h === 0 || a === 0) ? ' mine' : '';
+      const played = val.includes('–') && val !== '—';
+      const mid = played
+        ? `<div class="m-res">${val}</div>`
+        : `<div class="m-date">${g.date}</div><div class="m-time">${val}</div>`;
+      return `<div class="match${mine}">
+        <div class="m-team">${crest(T[h],h)}<span class="m-name${h===0?' sel':''}">${T[h]}</span></div>
+        <div class="m-mid">${mid}</div>
+        <div class="m-team right">${crest(T[a],a)}<span class="m-name${a===0?' sel':''}">${T[a]}</span></div>
+      </div>`;
+    }).join('');
+    document.getElementById('calList').innerHTML =
+      `<div class="gcard">${g.next ? '<div class="gcard-h"><h2>Partite</h2><span class="tag">Prossima</span></div>' : ''}${rows}</div>`;
+  }
+  let tfixPage = 0;
+  function renderTeamMatches(){
+    const {T, G} = calGiornate(calTeam);
+    const all = G.map(g => {
+      const m = g.matches.find(([h,a]) => h === 0 || a === 0);
+      if(!m) return null;
+      const [h, a, val] = m;
+      const home = h === 0;
+      const opp = T[home ? a : h];
+      const played = val.includes('–') && val !== '—';
+      let res, cls = 'tfix-res';
+      if(played){
+        const [ph, pa] = val.split('–').map(s => parseFloat(s.trim().replace(',', '.')));
+        if(home ? ph > pa : pa > ph) cls += ' win';
+        res = val;
+      } else {
+        res = g.next ? val : '—';
+        cls += ' up';
+      }
+      return {n: g.n, date: g.date, home, opp, res, cls};
+    }).filter(Boolean);
+    const pages = Math.max(1, Math.ceil(all.length / 4));
+    tfixPage = Math.min(tfixPage, pages - 1);
+    const perPage = chatCompact ? 2 : 4;
+    const slice = all.slice(tfixPage * 4, tfixPage * 4 + perPage);
+    document.getElementById('tfixRange').textContent =
+      slice.length > 1 ? `G${slice[0].n} – G${slice[slice.length-1].n}` : `G${slice[0].n}`;
+    document.getElementById('tfixPrev').disabled = tfixPage === 0;
+    document.getElementById('tfixNext').disabled = tfixPage === pages - 1;
+    document.getElementById('tfixList').innerHTML = slice.map(r => `<div class="tfix-row">
+        <span class="tfix-g">G${r.n}</span>
+        <span class="tfix-info">
+          <span class="tfix-opp">vs ${r.opp}</span>
+          <span class="tfix-meta" style="display:block">${r.home ? 'Casa' : 'Trasferta'} · ${r.date}</span>
+        </span>
+        <span class="${r.cls}">${r.res}</span>
+      </div>`).join('');
+  }
+  // focus sulla barra di conversazione -> viste compatte a 2 partite
+  const calChat = document.querySelector('#view-calendario-squadra .ai-bar textarea');
+  calChat.addEventListener('focus', () => {
+    if(chatCompact) return;
+    chatCompact = true;
+    renderGiornata();
+    renderTeamMatches();
+  });
+  calChat.addEventListener('blur', () => {
+    if(!chatCompact) return;
+    chatCompact = false;
+    renderGiornata();
+    renderTeamMatches();
+  });
+  document.getElementById('tfixPrev').addEventListener('click', () => { if(tfixPage > 0){ tfixPage--; renderTeamMatches(); } });
+  document.getElementById('tfixNext').addEventListener('click', () => { tfixPage++; renderTeamMatches(); });
+  document.getElementById('gPrev').addEventListener('click', () => { if(calIdx > 0){ calIdx--; renderGiornata(); } });
+  document.getElementById('gNext').addEventListener('click', () => { const {G} = calGiornate(calTeam); if(calIdx < G.length - 1){ calIdx++; renderGiornata(); } });
+  // scelta squadra: aggiorna e riparte dalla prossima giornata
+  document.querySelectorAll('.cal-team').forEach(card => {
+    card.addEventListener('click', () => {
+      calTeam = card.querySelector('h3').textContent;
+      calIdx = 3;
+      tfixPage = 0;
+      renderGiornata();
+      renderTeamMatches();
+    });
+  });
+  renderGiornata();
+  renderTeamMatches();
+
+  // ---- Moduli Serie A ----
+  // righe dall'attacco alla difesa; il portiere è aggiunto sempre in fondo
+  const FORMATIONS = {
+    '3-4-3': [['ATT','ATT','ATT'],['CEN','CEN','CEN','CEN'],['DIF','DIF','DIF']],
+    '3-5-2': [['ATT','ATT'],['CEN','CEN','CEN','CEN','CEN'],['DIF','DIF','DIF']],
+    '4-3-3': [['ATT','ATT','ATT'],['CEN','CEN','CEN'],['DIF','DIF','DIF','DIF']],
+    '4-4-2': [['ATT','ATT'],['CEN','CEN','CEN','CEN'],['DIF','DIF','DIF','DIF']],
+    '4-5-1': [['ATT'],['CEN','CEN','CEN','CEN','CEN'],['DIF','DIF','DIF','DIF']],
+    '5-3-2': [['ATT','ATT'],['CEN','CEN','CEN'],['DIF','DIF','DIF','DIF','DIF']],
+    '5-4-1': [['ATT'],['CEN','CEN','CEN','CEN'],['DIF','DIF','DIF','DIF','DIF']]
+  };
+  // rosa TFP: 3 POR, 8 DIF, 8 CEN, 6 ATT (25 giocatori)
+  const ROSA = { POR:3, DIF:8, CEN:8, ATT:6 };
+
+  const moduloBtn = document.getElementById('moduloBtn');
+  const moduloMenu = document.getElementById('moduloMenu');
+  const moduloLabel = document.getElementById('moduloLabel');
+  const pitchRows = document.getElementById('pitchRows');
+  const benchRow = document.getElementById('benchRow');
+  const benchCount = document.getElementById('benchCount');
+  const benchBtnCount = document.getElementById('benchBtnCount');
+  let currentModulo = '4-4-2';
+
+  function slotHTML(role){
+    return `<div class="slot" data-role="${role}" role="button" tabindex="0"><span class="plus">+</span><span class="role">${role}</span></div>`;
+  }
+
+  function renderFormation(name){
+    currentModulo = name;
+    moduloLabel.textContent = name;
+    // campo
+    const rows = [...FORMATIONS[name], ['POR']];
+    pitchRows.innerHTML = rows.map(r =>
+      `<div class="row">${r.map(slotHTML).join('')}</div>`
+    ).join('');
+    if (typeof resetLineup === 'function') resetLineup();
+    setTimeout(() => { if (typeof renderBench === 'function') renderBench(); }, 0);
+    // menu
+    moduloMenu.querySelectorAll('button').forEach(b =>
+      b.classList.toggle('sel', b.textContent === name));
+  }
+
+  // costruzione menu: 3 colonne per linea difensiva (3 / 4 / 5)
+  const groups = {'3':[], '4':[], '5':[]};
+  Object.keys(FORMATIONS).forEach(n => groups[n[0]].push(n));
+  moduloMenu.innerHTML = ['3','4','5'].map(g =>
+    `<div class="modulo-col">${groups[g].map(n => `<button role="menuitem">${n}</button>`).join('')}</div>`
+  ).join('');
+  moduloMenu.querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', () => {
+      renderFormation(b.textContent);
+      toggleModulo(false);
+    });
+  });
+
+  function toggleModulo(open){
+    moduloMenu.classList.toggle('open', open);
+    moduloBtn.setAttribute('aria-expanded', open);
+  }
+  moduloBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    toggleModulo(!moduloMenu.classList.contains('open'));
+  });
+  document.addEventListener('click', e => {
+    if(!moduloMenu.contains(e.target)) toggleModulo(false);
+  });
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape') toggleModulo(false);
+  });
+
+  renderFormation('4-4-2');
+
+  // ---- Panchina sheet ----
+  const benchSheet = document.getElementById('benchSheet');
+  const benchScrim = document.getElementById('benchScrim');
+  function toggleBench(open){
+    benchSheet.classList.toggle('open', open);
+    benchScrim.classList.toggle('open', open);
+  }
+  document.getElementById('benchBtn').addEventListener('click', () => toggleBench(true));
+  document.getElementById('benchClose').addEventListener('click', () => toggleBench(false));
+  benchScrim.addEventListener('click', () => toggleBench(false));
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') toggleBench(false); });
+
+  // ---- Selezione giocatori ----
+  const PLAYERS = {
+    POR: [
+      {n:'Bruno Guantone', t:'TOR', q:14, v:'6,42'},
+      {n:'Ivo Farfalla', t:'EMP', q:9, v:'6,08'},
+      {n:'Sasha Presa', t:'VER', q:7, v:'5,91'}
+    ],
+    DIF: [
+      {n:'Ettore Muraglia', t:'INT', q:22, v:'6,71'},
+      {n:'Marco Cementi', t:'JUV', q:18, v:'6,55'},
+      {n:'Rocco Baluardo', t:'NAP', q:16, v:'6,48'},
+      {n:'Leo Diagonale', t:'ATA', q:13, v:'6,37'},
+      {n:'Dino Falcata', t:'ROM', q:11, v:'6,22'},
+      {n:'Nino Scivolata', t:'BOL', q:9, v:'6,14'},
+      {n:'Ugo Sgarbato', t:'LAZ', q:8, v:'6,05'},
+      {n:'Piero Argine', t:'GEN', q:6, v:'5,88'}
+    ],
+    CEN: [
+      {n:'Tommaso Regista', t:'INT', q:26, v:'7,02'},
+      {n:'Franco Geometra', t:'MIL', q:21, v:'6,84'},
+      {n:'Elia Pendolo', t:'FIO', q:17, v:'6,63'},
+      {n:'Aldo Tessitore', t:'JUV', q:15, v:'6,51'},
+      {n:'Santi Filtrante', t:'NAP', q:13, v:'6,44'},
+      {n:'Luca Mediana', t:'TOR', q:10, v:'6,26'},
+      {n:'Gigi Lancio', t:'UDI', q:8, v:'6,12'},
+      {n:'Remo Boa', t:'CAG', q:6, v:'5,97'}
+    ],
+    ATT: [
+      {n:'Rino Bomber', t:'NAP', q:34, v:'7,45'},
+      {n:'Ciro Sassata', t:'MIL', q:28, v:'7,18'},
+      {n:'Manuel Rapace', t:'INT', q:25, v:'7,03'},
+      {n:'Yuri Staffilata', t:'ROM', q:19, v:'6,77'},
+      {n:'Dario Spiovente', t:'FIO', q:14, v:'6,52'},
+      {n:'Nico Zampata', t:'LEC', q:10, v:'6,31'}
+    ]
+  };
+  const ROLE_LABEL = { POR:'Portieri', DIF:'Difensori', CEN:'Centrocampisti', ATT:'Attaccanti' };
+  const pickSheet = document.getElementById('pickSheet');
+  const pickScrim = document.getElementById('pickScrim');
+  const pickList = document.getElementById('pickList');
+  const pickTitle = document.getElementById('pickTitle');
+  let pickTarget = null;
+
+  function shortName(n){
+    const parts = n.split(' ');
+    return parts[0][0] + '. ' + parts.slice(1).join(' ');
+  }
+  function usedNames(){
+    return [...pitchRows.querySelectorAll('.slot.filled')].map(s => s.dataset.player);
+  }
+  function resetLineup(){ /* gli slot appena rigenerati sono già vuoti */ }
+
+  function togglePick(open){
+    pickSheet.classList.toggle('open', open);
+    pickScrim.classList.toggle('open', open);
+    if(!open) pickTarget = null;
+  }
+
+  function openPicker(slot){
+    pickTarget = slot;
+    const role = slot.dataset.role;
+    pickTitle.textContent = ROLE_LABEL[role] || role;
+    const used = usedNames();
+    const rows = PLAYERS[role].map(p => {
+      const busy = used.includes(p.n) && slot.dataset.player !== p.n;
+      return `<button class="pick-row${busy ? ' used' : ''}" data-player="${p.n}">
+        <span class="pick-info">
+          <span class="pick-name">${p.n}</span>
+          <span class="pick-meta" style="display:block">${p.t} \u00B7 ${p.q} cr</span>
+        </span>
+        ${busy ? '<span class="tagbusy">Schierato</span>' : ''}
+        <span class="pick-voto">${p.v}</span>
+      </button>`;
+    }).join('');
+    const libera = slot.classList.contains('filled')
+      ? '<button class="pick-row libera" data-action="libera">Libera slot</button>' : '';
+    pickList.innerHTML = rows + libera;
+  }
+
+  function fillSlot(slot, p){
+    slot.classList.add('filled');
+    slot.dataset.player = p.n;
+    slot.innerHTML = `<span class="p-name">${shortName(p.n)}</span><span class="p-voto">${p.v}</span>`;
+    if (typeof renderBench === 'function') renderBench();
+  }
+  function emptySlot(slot){
+    const role = slot.dataset.role;
+    slot.classList.remove('filled');
+    delete slot.dataset.player;
+    slot.innerHTML = `<span class="plus">+</span><span class="role">${role}</span>`;
+    if (typeof renderBench === 'function') renderBench();
+  }
+
+  pitchRows.addEventListener('click', e => {
+    const slot = e.target.closest('.slot');
+    if(!slot) return;
+    openPicker(slot);
+    togglePick(true);
+  });
+  pickList.addEventListener('click', e => {
+    const row = e.target.closest('.pick-row');
+    if(!row || !pickTarget) return;
+    if(row.dataset.action === 'libera'){
+      emptySlot(pickTarget);
+    } else {
+      const role = pickTarget.dataset.role;
+      const p = PLAYERS[role].find(x => x.n === row.dataset.player);
+      if(p) fillSlot(pickTarget, p);
+    }
+    togglePick(false);
+  });
+  document.getElementById('pickClose').addEventListener('click', () => togglePick(false));
+  pickScrim.addEventListener('click', () => togglePick(false));
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') togglePick(false); });
+
+  // ---- Squadra casuale: migliori per media, titolari + panchina ----
+  function fillBest(){
+    const media = p => parseFloat(p.v.replace(',', '.'));
+    const pool = {};
+    Object.keys(PLAYERS).forEach(r => {
+      pool[r] = [...PLAYERS[r]].sort((a, b) => media(b) - media(a));
+    });
+    // titolari: per ogni slot in campo, il migliore disponibile del ruolo
+    pitchRows.querySelectorAll('.slot').forEach(slot => {
+      const p = pool[slot.dataset.role].shift();
+      if(p) fillSlot(slot, p);
+    });
+  }
+  document.getElementById('randomBtn').addEventListener('click', fillBest);
+
+  // ---- Panchina derivata con priorita e drag & drop ----
+  const benchOrder = {};
+  Object.keys(PLAYERS).forEach(r => {
+    benchOrder[r] = [...PLAYERS[r]]
+      .sort((a, b) => parseFloat(b.v.replace(',', '.')) - parseFloat(a.v.replace(',', '.')))
+      .map(p => p.n);
+  });
+
+  function benchVisible(role){
+    const starters = usedNames();
+    return benchOrder[role].filter(n => !starters.includes(n));
+  }
+
+  function renderBench(){
+    const starters = usedNames();
+    let tot = 0;
+    const silhouette = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="7.5" r="3.6" fill="#C9A45C"/>
+      <path d="M4.5 20c.9-4.2 3.9-6.4 7.5-6.4s6.6 2.2 7.5 6.4" fill="#C9A45C" opacity=".55"/>
+    </svg>`;
+    benchRow.innerHTML = ['POR','DIF','CEN','ATT'].map(role => {
+      const vis = benchVisible(role);
+      tot += vis.length;
+      if(!vis.length) return '';
+      const cards = vis.map((n, i) => {
+        const p = PLAYERS[role].find(x => x.n === n);
+        return `<div class="fig" data-idx="${i}" role="button" tabindex="0" aria-label="${p.n}, priorit\u00E0 ${i+1}">
+          <span class="fig-prio">${i + 1}\u00B0</span>
+          ${silhouette}
+          <span class="fig-name">${shortName(p.n)}</span>
+          <span class="fig-voto">${p.v}</span>
+        </div>`;
+      }).join('');
+      return `<div class="bench-group-label">${ROLE_LABEL[role]}</div><div class="bench-grid" data-role="${role}">${cards}</div>`;
+    }).join('');
+    const label = starters.length === 11 ? '14/14' : String(tot);
+    benchCount.textContent = label;
+    benchBtnCount.textContent = label;
+    benchRow.querySelectorAll('.fig').forEach(card => attachDrag(card));
+  }
+
+  function moveBenchItem(role, from, to){
+    const vis = benchVisible(role);
+    const max = vis.length - 1;
+    to = Math.max(0, Math.min(max, to));
+    if(from === to || from < 0 || from > max) return;
+    const item = vis.splice(from, 1)[0];
+    vis.splice(to, 0, item);
+    const starters = usedNames();
+    const startersOfRole = benchOrder[role].filter(n => starters.includes(n));
+    benchOrder[role] = [...vis, ...startersOfRole];
+    renderBench();
+  }
+
+  function attachDrag(card){
+    let sx = 0, sy = 0, active = false;
+    card.addEventListener('pointerdown', e => {
+      active = true; sx = e.clientX; sy = e.clientY;
+      card.classList.add('dragging');
+      try { card.setPointerCapture(e.pointerId); } catch(_){}
+      e.preventDefault();
+    });
+    card.addEventListener('pointermove', e => {
+      if(!active) return;
+      card.style.transform = `translate(${e.clientX - sx}px, ${e.clientY - sy}px)`;
+    });
+    const end = e => {
+      if(!active) return;
+      active = false;
+      card.classList.remove('dragging');
+      card.style.transform = '';
+      const grid = card.parentElement;
+      const cards = [...grid.querySelectorAll('.fig')];
+      let target = -1;
+      cards.forEach(c => {
+        if(c === card) return;
+        const r = c.getBoundingClientRect();
+        if(e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom){
+          target = parseInt(c.dataset.idx, 10);
+        }
+      });
+      if(target >= 0){
+        moveBenchItem(grid.dataset.role, parseInt(card.dataset.idx, 10), target);
+      }
+    };
+    card.addEventListener('pointerup', end);
+    card.addEventListener('pointercancel', end);
+  }
+
+  renderBench();
+
+  // ---- Cestino: cancella tutta la squadra ----
+  document.getElementById('svuotaBtn').addEventListener('click', () => {
+    pitchRows.querySelectorAll('.slot.filled').forEach(emptySlot);
+  });
+</script>
+
+<script>
+window.TFP_PLAYER_PROFILES = {
+  camarda: "camarda-profile.html",
+  liberali: "liberali-profile.html",
+  bartesaghi: "bartesaghi-profile.html",
+  comotto: "comotto-profile.html",
+  esposito: "esposito-profile.html",
+  lautaro: "lautaro-profile.html",
+  pioesposito: "pio-esposito-profile.html"
+};
+function openPlayerProfile(key){
+  const frame=document.getElementById('playerFrame');
+  const src=window.TFP_PLAYER_PROFILES[key];
+  if(!frame || !src) return;
+  if(frame.src !== src) frame.src=src;
+  frame.dataset.player=key;
+  show('player');
+}
+</script>
+
+<script>
+(function(){
+  const box=document.getElementById('homeAI');
+  const input=document.getElementById('homeAIText');
+  const send=document.getElementById('homeAISend');
+  if(!box||!input||!send)return;
+
+  document.querySelectorAll('[data-ai-prompt]').forEach(b=>{
+    b.addEventListener('click',()=>{
+      input.value=b.dataset.aiPrompt||'';
+      input.focus();
+    });
+  });
+
+  function go(){
+    const query=input.value.trim();
+    if(!query)return;
+
+    // Normalize user input: uppercase/lowercase and accents do not affect routing.
+    const normalizedQuery=query
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g,'')
+      .toLocaleLowerCase('it-IT');
+
+    // Connected player routing. Case and accents are ignored.
+    if(/\bcamarda\b/.test(normalizedQuery)){
+      input.value='';
+      input.blur();
+      openPlayerProfile('camarda');
+      return;
+    }
+
+    if(/\bliberali\b/.test(normalizedQuery)){
+      input.value='';
+      input.blur();
+      openPlayerProfile('liberali');
+      return;
+    }
+    if(/\bbartesaghi\b/.test(normalizedQuery)){ input.value=''; input.blur(); openPlayerProfile('bartesaghi'); return; }
+    if(/\bcomotto\b/.test(normalizedQuery)){ input.value=''; input.blur(); openPlayerProfile('comotto'); return; }
+    if(/\bpio\s+esposito\b/.test(normalizedQuery) || /\bfrancesco\s+pio\s+esposito\b/.test(normalizedQuery) || /\bpioesposito\b/.test(normalizedQuery)){
+      input.value=''; input.blur(); openPlayerProfile('pioesposito'); return;
+    }
+    if(/\besposito\b/.test(normalizedQuery)){ input.value=''; input.blur(); openPlayerProfile('esposito'); return; }
+    if(/\blautaro\b/.test(normalizedQuery) || /\bmartinez\b/.test(normalizedQuery)){ input.value=''; input.blur(); openPlayerProfile('lautaro'); return; }
+
+    const s=box.querySelector('.ai-status');
+    if(s){
+      s.textContent='READY';
+      setTimeout(()=>s.textContent='AI',1000);
+    }
+    input.blur();
+  }
+
+  send.addEventListener('click',go);
+  input.addEventListener('keydown',e=>{
+    if(e.key==='Enter'&&!e.shiftKey){
+      e.preventDefault();
+      go();
+    }
+  });
+})();
+
+/* V9 — News navigation only */
+(function(){
+  const newsCard=document.getElementById('newsCard');
+  const newsView=document.getElementById('view-news');
+  if(!newsCard || !newsView) return;
+
+  function openNews(){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    newsView.classList.add('active');
+    document.getElementById('app')?.classList.remove('on-formazione','on-player');
+    window.scrollTo(0,0);
+  }
+  function closeNews(){
+    newsView.classList.remove('active');
+    document.getElementById('view-home')?.classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  newsCard.addEventListener('click',openNews);
+  newsCard.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openNews();}});
+  newsView.querySelector('.back-btn')?.addEventListener('click',closeNews);
+
+  newsView.querySelectorAll('.news-tab').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      newsView.querySelectorAll('.news-tab').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+})();
+
+</script>
+
+
+</body>
+</html>

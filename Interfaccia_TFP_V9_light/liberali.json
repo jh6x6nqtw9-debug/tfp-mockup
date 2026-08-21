@@ -1,0 +1,87 @@
+{
+  "id": "mattia-liberali",
+  "slug": "mattia-liberali",
+  "name": "Mattia Liberali",
+  "shortName": "M. Liberali",
+  "club": {
+    "name": "Como 1907",
+    "logo": "como1907.png"
+  },
+  "nationality": {
+    "name": "Italy",
+    "code": "ITA",
+    "flag": "🇮🇹"
+  },
+  "personal": {
+    "birthDate": "2007-04-06",
+    "age": 19,
+    "birthPlace": "Lissone, Italia",
+    "height": 172,
+    "weight": 67,
+    "preferredFoot": "Left"
+  },
+  "contract": {
+    "expires": "2031-06-30"
+  },
+  "market": {
+    "value": 8500000,
+    "currency": "EUR",
+    "display": "€8.5M",
+    "lastUpdate": "2026-07-15"
+  },
+  "position": {
+    "primary": {
+      "code": "AM",
+      "name": "Attacking Midfielder",
+      "x": 50,
+      "y": 32
+    },
+    "secondary": [
+      {
+        "code": "RW",
+        "name": "Right Winger"
+      },
+      {
+        "code": "LW",
+        "name": "Left Winger"
+      }
+    ]
+  },
+  "season": {
+    "competition": "Serie B",
+    "club": "Catanzaro",
+    "season": "2025/26",
+    "appearances": 24,
+    "minutes": 1348,
+    "goals": 3,
+    "assists": 4
+  },
+  "tfp": {
+    "overall": 78,
+    "potential": 5,
+    "attributes": {
+      "technique": 84,
+      "creativity": 83,
+      "dribbling": 82,
+      "vision": 81,
+      "acceleration": 77,
+      "physical": 67
+    },
+    "strengths": [
+      "Technique",
+      "Creativity",
+      "Dribbling",
+      "Vision",
+      "Ball control"
+    ],
+    "weaknesses": [
+      "Physicality",
+      "Defensive contribution",
+      "Aerial game"
+    ],
+    "summary": "Highly technical left-footed attacking midfielder capable of creating chances between the lines. Excellent close control and creativity, with the potential to become a top-level Serie A playmaker."
+  },
+  "media": {
+    "photo": "liberali.webp"
+  }
+}
