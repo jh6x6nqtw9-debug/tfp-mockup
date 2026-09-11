@@ -1,0 +1,82 @@
+{
+  "id": "francesco-pio-esposito",
+  "slug": "francesco-pio-esposito",
+  "name": "Francesco Pio Esposito",
+  "shortName": "P. Esposito",
+  "club": {
+    "name": "Inter",
+    "logo": "inter.png"
+  },
+  "nationality": {
+    "name": "Italy",
+    "code": "ITA",
+    "flag": "🇮🇹"
+  },
+  "personal": {
+    "birthDate": "2005-06-28",
+    "age": 21,
+    "birthPlace": "Castellammare di Stabia, Italia",
+    "height": 191,
+    "weight": null,
+    "preferredFoot": "Right"
+  },
+  "contract": {
+    "expires": "2030-06-30"
+  },
+  "market": {
+    "value": 45000000,
+    "currency": "EUR",
+    "display": "€45M",
+    "lastUpdate": "2026-05-29"
+  },
+  "position": {
+    "primary": {
+      "code": "ST",
+      "name": "Centre-Forward",
+      "x": 50,
+      "y": 18
+    },
+    "secondary": []
+  },
+  "season": {
+    "competition": "Serie A",
+    "club": "Inter",
+    "season": "2025/26",
+    "appearances": 35,
+    "minutes": 1561,
+    "goals": 7,
+    "assists": 3
+  },
+  "tfp": {
+    "overall": 83,
+    "potential": 5,
+    "attributes": {
+      "finishing": 82,
+      "movement": 81,
+      "aerial": 88,
+      "physical": 89,
+      "holdUpPlay": 87,
+      "linkUpPlay": 82,
+      "technique": 79,
+      "pace": 75
+    },
+    "strengths": [
+      "Physicality",
+      "Aerial ability",
+      "Hold-up play",
+      "Finishing",
+      "Penalty-box presence",
+      "Link-up play"
+    ],
+    "weaknesses": [
+      "Acceleration",
+      "Top-end pace",
+      "Dribbling in wide areas",
+      "Senior consistency"
+    ],
+    "summary": "Powerful modern centre-forward with elite physical presence, strong aerial ability and excellent hold-up play. Effective with his back to goal and increasingly dangerous inside the penalty area, combining size with intelligent movement and good technical quality. High-upside striker with the profile to become a complete top-level number nine."
+  },
+  "media": {
+    "photo": "pio-esposito.webp"
+  }
+}
